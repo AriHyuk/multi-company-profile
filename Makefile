@@ -2,7 +2,7 @@
 
 # Jalankan semua container dev (Laravel, Vite, Postgres, Redis, Mailpit)
 up:
-	docker compose up 
+	docker compose up -d
 
 # Matikan semua container dev
 down:

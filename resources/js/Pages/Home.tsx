@@ -1,48 +1,36 @@
 import { Head, Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 
-interface HeroProps {
-    title: string;
-    subtitle: string;
-    ctaLabel: string;
-    ctaUrl: string;
-}
-
-interface MetaProps {
-    description: string;
-    ogImage: string;
-}
-
-interface CompanyProps {
-    name: string;
-    tagline: string;
-}
-
 interface Props {
-    hero: HeroProps;
-    meta: MetaProps;
-    company: CompanyProps;
+    hero: {
+        title: string;
+        subtitle: string;
+        ctaLabel: string;
+        ctaUrl: string;
+    };
+    meta: {
+        description: string;
+        ogImage: string;
+    };
+    company: {
+        name: string;
+        tagline: string;
+    };
 }
 
 export default function Home({ hero, meta, company }: Props) {
     return (
         <PublicLayout>
-            <Head>
-                <title>
-                    {company.name} — {company.tagline}
-                </title>
-                <meta name="description" content={meta.description} />
-                <meta
-                    property="og:title"
-                    content={`${company.name} — ${company.tagline}`}
-                />
-                <meta property="og:description" content={meta.description} />
-                {meta.ogImage && (
-                    <meta property="og:image" content={meta.ogImage} />
-                )}
-            </Head>
+            <Head
+                title={`${company.name ?? "MultiCo"} — ${company.tagline ?? "Profiles"}`}
+            />
 
-            <HeroSection {...hero} />
+            <HeroSection
+                title={hero.title}
+                subtitle={hero.subtitle}
+                ctaLabel={hero.ctaLabel}
+                ctaUrl={hero.ctaUrl}
+            />
             <ServicesPreview />
             <FeaturedProjects />
             <CtaBanner ctaUrl={hero.ctaUrl} />
@@ -52,10 +40,16 @@ export default function Home({ hero, meta, company }: Props) {
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 
+interface HeroProps {
+    title: string;
+    subtitle: string;
+    ctaLabel: string;
+    ctaUrl: string;
+}
+
 function HeroSection({ title, subtitle, ctaLabel, ctaUrl }: HeroProps) {
     return (
         <section className="relative overflow-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-purple-900 text-white">
-            {/* Decorative circles */}
             <div className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-indigo-500 opacity-20 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-40 -left-20 h-80 w-80 rounded-full bg-purple-500 opacity-20 blur-3xl" />
 
@@ -132,24 +126,22 @@ function ServicesPreview() {
                         Anda.
                     </p>
                 </div>
-
                 <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    {services.map((service) => (
+                    {services.map((s) => (
                         <div
-                            key={service.title}
+                            key={s.title}
                             className="group rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-md"
                         >
-                            <span className="text-3xl">{service.icon}</span>
+                            <span className="text-3xl">{s.icon}</span>
                             <h3 className="mt-4 text-base font-semibold text-gray-900">
-                                {service.title}
+                                {s.title}
                             </h3>
-                            <p className="mt-2 text-sm text-gray-500 leading-relaxed">
-                                {service.description}
+                            <p className="mt-2 text-sm leading-relaxed text-gray-500">
+                                {s.description}
                             </p>
                         </div>
                     ))}
                 </div>
-
                 <div className="mt-10 text-center">
                     <Link
                         href="/layanan"
@@ -201,34 +193,31 @@ function FeaturedProjects() {
                         Beberapa karya terbaik yang telah kami selesaikan.
                     </p>
                 </div>
-
                 <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {projects.map((project) => (
+                    {projects.map((p) => (
                         <div
-                            key={project.title}
+                            key={p.title}
                             className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-100 transition hover:shadow-lg"
                         >
-                            {/* Placeholder thumbnail */}
                             <div
-                                className={`h-48 bg-gradient-to-br ${project.color} flex items-center justify-center`}
+                                className={`h-48 bg-gradient-to-br ${p.color} flex items-center justify-center`}
                             >
                                 <span className="text-5xl opacity-50">🖼️</span>
                             </div>
                             <div className="p-6">
                                 <span className="text-xs font-semibold uppercase tracking-wider text-indigo-600">
-                                    {project.category}
+                                    {p.category}
                                 </span>
                                 <h3 className="mt-1 text-lg font-semibold text-gray-900">
-                                    {project.title}
+                                    {p.title}
                                 </h3>
                                 <p className="mt-2 text-sm text-gray-500">
-                                    {project.description}
+                                    {p.description}
                                 </p>
                             </div>
                         </div>
                     ))}
                 </div>
-
                 <div className="mt-10 text-center">
                     <Link
                         href="/portofolio"
