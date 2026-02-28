@@ -566,4 +566,92 @@ npx playwright test  # jika pakai Playwright
 
 ---
 
+## 🔥 Lessons Learned (Updated: 2026-03-01)
+
+Catatan dari bug nyata yang terjadi selama development. **Baca ini sebelum mulai Epic baru.**
+
+### 1. Inertia `<Head>` Crash = Blank Screen
+
+**Masalah:** Halaman blank screen total setelah implement Head dengan SEO tags.
+
+**Root cause:** `<Head>` Inertia tidak bisa punya `<title>` sebagai child dengan multi-line text nodes:
+
+```tsx
+// ❌ INI CRASH — whitespace/newline antara expressions = fatal React error
+<Head>
+    <title>
+        {company.name} — {company.tagline}
+    </title>
+</Head>
+```
+
+**Fix:**
+
+```tsx
+// ✅ Gunakan title sebagai prop
+<Head title={`${company.name} — ${company.tagline}`} />
+```
+
+→ Detail lengkap di `.agent/skills/inertia-page/SKILL.md`
+
+---
+
+### 2. Docker Network = `bad address 'postgres'`
+
+**Masalah:** Container app jalan tapi tidak bisa connect ke DB. `migrate` gagal.
+
+**Root cause:** Container di-up tanpa di-down dulu, sehingga app container masuk network lama yang terputus dari postgres.
+
+**Fix:**
+
+```bash
+docker compose down && docker compose up -d
+```
+
+**Diagnosa cepat:**
+
+```bash
+docker compose exec app sh -c "ping -c 1 postgres"
+# Kalau "bad address" → harus down & up ulang
+```
+
+---
+
+### 3. Vite Cache = File Lama Tetap Serve
+
+**Masalah:** File TSX sudah diedit, tapi browser masih render versi lama. Error trace masih menunjuk ke line nomor yang sudah tidak relevan.
+
+**Fix:**
+
+```bash
+docker compose exec app sh -c "rm -rf node_modules/.vite"
+docker compose restart app
+```
+
+---
+
+### 4. Tambah Kolom di `users` = Tests Gagal
+
+**Masalah:** Setelah tambah kolom `role` ke tabel users, semua feature test yang pakai `User::factory()` gagal dengan DB error.
+
+**Root cause:** `UserFactory` tidak tahu kolom baru yang required (tanpa DB default).
+
+**Fix:** Selalu update `database/factories/UserFactory.php` setiap kali tambah kolom baru ke tabel `users`. Tambahkan field + default value yang masuk akal untuk testing.
+
+---
+
+### 5. `phpunit.xml` harus override ke PostgreSQL untuk test
+
+**Masalah:** Test gagal karena Laravel default pakai SQLite in-memory, tapi project pakai PostgreSQL dengan fitur khusus (enum, dsb.).
+
+**Fix:** Set di `phpunit.xml`:
+
+```xml
+<env name="DB_CONNECTION" value="pgsql"/>
+<env name="DB_DATABASE" value="multi_company_profiles"/>
+<env name="DB_HOST" value="postgres"/>
+```
+
+---
+
 _Referensi: [PRD Notion](https://www.notion.so/PRD-Company-Profile-Ecosystem-311c241984268106a8a9f134c14674fe) | [Product Backlog Notion](https://www.notion.so/Product-Backlog-Phase-1-MVP-315c241984268177b128c649e2342367)_
