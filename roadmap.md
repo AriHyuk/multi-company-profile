@@ -204,20 +204,20 @@
 
 ### 6.1 Database
 
-- [ ] Buat migration `articles` (title, slug, body, excerpt, thumbnail, category, author_id FK users, status: draft/published, published_at)
-- [ ] Buat Model `Article` + relasi `author()` ke `User`
-- [ ] Buat Seeder 3 artikel placeholder
+- [x] Buat migration `articles` (title, slug, body, excerpt, thumbnail, category, author_id FK users, status: draft/published, published_at)
+- [x] Buat Model `Article` + relasi `author()` ke `User`
+- [x] Buat Seeder 3 artikel placeholder
 
 ### 6.2 Route & Controller
 
-- [ ] Buat `ArticleController` — `index()` + `show($slug)`
-- [ ] Route `GET /artikel` + `GET /artikel/{slug}`
+- [x] Buat `ArticleController` — `index()` + `show($slug)`
+- [x] Route `GET /artikel` + `GET /artikel/{slug}`
 
 ### 6.3 React Page
 
-- [ ] Buat `resources/js/pages/Article/Index.tsx` — listing + pagination
-- [ ] Buat `resources/js/pages/Article/Show.tsx` — render body + author info
-- [ ] SEO meta tags per artikel (auto-generate dari excerpt)
+- [x] Buat `resources/js/pages/Article/Index.tsx` — listing + pagination
+- [x] Buat `resources/js/pages/Article/Show.tsx` — render body + author info
+- [x] SEO meta tags per artikel (auto-generate dari excerpt)
 
 ---
 

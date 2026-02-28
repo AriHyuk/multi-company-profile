@@ -13,6 +13,8 @@ Route::get('/layanan', [ServiceController::class, 'index'])->name('services.inde
 Route::get('/layanan/{slug}', [ServiceController::class, 'show'])->name('services.show');
 Route::get('/portofolio', [PortfolioController::class, 'index'])->name('portfolios.index');
 Route::get('/portofolio/{slug}', [PortfolioController::class, 'show'])->name('portfolios.show');
+Route::get('/artikel', [\App\Http\Controllers\ArticleController::class, 'index'])->name('articles.index');
+Route::get('/artikel/{slug}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('articles.show');
 
 // ── Authenticated User Routes ─────────────────────────────────────────────────
 Route::get('/dashboard', function () {
