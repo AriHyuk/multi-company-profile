@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 // ── Public Routes ─────────────────────────────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/tentang-kami', [\App\Http\Controllers\AboutController::class, 'index'])->name('about');
 
 // ── Authenticated User Routes ─────────────────────────────────────────────────
 Route::get('/dashboard', function () {
