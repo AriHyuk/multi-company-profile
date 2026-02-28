@@ -110,7 +110,7 @@
 
 ### 2.1 Database
 
-- [ ] Buat migration `site_settings` (key-value store)
+- [x] Buat migration `site_settings` (key-value store)
 
     ```
     id, key (string, unique), value (text), created_at, updated_at
@@ -118,22 +118,22 @@
 
     📝 Notes: Simpan hero_title, hero_desc, hero_image, tagline dsb. pakai pattern key-value
 
-- [ ] Buat Model `SiteSetting` + helper method `SiteSetting::get('hero_title')`
-- [ ] Buat seeder data awal site_settings
+- [x] Buat Model `SiteSetting` + helper method `SiteSetting::get('hero_title')`
+- [x] Buat seeder data awal site_settings
 
 ### 2.2 Route & Controller
 
-- [ ] Buat `HomeController` — method `index()`, return Inertia `Home`
-- [ ] Tambahkan route `GET /` → `HomeController@index`
+- [x] Buat `HomeController` — method `index()`, return Inertia `Home`
+- [x] Tambahkan route `GET /` → `HomeController@index`
 
 ### 2.3 React Page
 
-- [ ] Buat `resources/js/pages/Home.tsx`
-- [ ] Komponen `HeroSection` — headline, subheadline, CTA button
-- [ ] Komponen `ServicesPreview` — 3–4 layanan unggulan
-- [ ] Komponen `FeaturedProjects` — 3 portofolio terbaru dari DB
-- [ ] Komponen `CtaBanner` — tombol menuju /kontak
-- [ ] SEO: meta title + description + OG tags via Inertia `<Head>`
+- [x] Buat `resources/js/pages/Home.tsx`
+- [x] Komponen `HeroSection` — headline, subheadline, CTA button
+- [x] Komponen `ServicesPreview` — 3–4 layanan unggulan
+- [x] Komponen `FeaturedProjects` — 3 portofolio terbaru dari DB
+- [x] Komponen `CtaBanner` — tombol menuju /kontak
+- [x] SEO: meta title + description + OG tags via Inertia `<Head>`
 
 ---
 
