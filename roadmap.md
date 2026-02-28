@@ -141,22 +141,22 @@
 
 ### 3.1 Database
 
-- [ ] Buat migration `about_content` (description, vision, mission, founded_year, logo)
-- [ ] Buat migration `team_members` (name, role, photo, bio, order, is_active)
-- [ ] Buat Model + Seeder untuk keduanya
+- [x] Buat migration `about_content` (description, vision, mission, founded_year, logo)
+- [x] Buat migration `team_members` (name, role, photo, bio, order, is_active)
+- [x] Buat Model + Seeder untuk keduanya
 
 ### 3.2 Route & Controller
 
-- [ ] Buat `AboutController@index`, return Inertia `About`
-- [ ] Tambahkan route `GET /tentang-kami`
+- [x] Buat `AboutController@index`, return Inertia `About`
+- [x] Tambahkan route `GET /tentang-kami`
 
 ### 3.3 React Page
 
-- [ ] Buat `resources/js/pages/About.tsx`
-- [ ] Komponen `CompanyProfile` (text + logo)
-- [ ] Komponen `VisionMission` (2 kolom card)
-- [ ] Komponen `TeamGrid` (grid card: foto, nama, jabatan)
-- [ ] SEO meta tags
+- [x] Buat `resources/js/pages/About.tsx`
+- [x] Komponen `CompanyProfile` (text + logo)
+- [x] Komponen `VisionMission` (2 kolom card)
+- [x] Komponen `TeamGrid` (grid card: foto, nama, jabatan)
+- [x] SEO meta tags
 
 ---
 
