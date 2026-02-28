@@ -1,0 +1,73 @@
+
+services:
+  # Laravel App & Vite
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: mcp_app
+    restart: unless-stopped
+    ports:
+      - '${APP_PORT:-8000}:8000'
+      - '${VITE_PORT:-5173}:5173'
+    volumes:
+      - .:/var/www/html
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_DATABASE=${DB_DATABASE:-multi_company_profiles}
+      - DB_USERNAME=${DB_USERNAME:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-your_password}
+      - REDIS_HOST=redis
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Database PostgreSQL
+  postgres:
+    image: postgres:16-alpine
+    container_name: mcp_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: '${DB_DATABASE:-multi_company_profiles}'
+      POSTGRES_USER: '${DB_USERNAME:-postgres}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-your_password}'
+    volumes:
+      - mcp_pgdata:/var/lib/postgresql/data
+    ports:
+      - '${FORWARD_DB_PORT:-5432}:5432'
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE:-multi_company_profiles}", "-U", "${DB_USERNAME:-postgres}"]
+      retries: 3
+      timeout: 5s
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: mcp_redis
+    restart: unless-stopped
+    ports:
+      - '${FORWARD_REDIS_PORT:-6379}:6379'
+    volumes:
+      - mcp_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      retries: 3
+      timeout: 5s
+
+  # Mailpit (Testing Email)
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mcp_mailpit
+    restart: unless-stopped
+    ports:
+      - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+      - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+
+volumes:
+  mcp_pgdata:
+    driver: local
+  mcp_redis_data:
+    driver: local

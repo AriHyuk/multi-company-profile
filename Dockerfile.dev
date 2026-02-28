@@ -1,0 +1,25 @@
+FROM php:8.4-fpm-alpine
+
+# Install system dependencies & libraries
+RUN apk add --no-cache \
+    postgresql-dev \
+    nodejs \
+    npm \
+    git \
+    zip \
+    unzip \
+    libzip-dev \
+    bash \
+    icu-dev
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_pgsql pcntl zip intl
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+# We will mount the directory so no need to copy code during build
+# Start both PHP Artisan Serve and Vite
+CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=8000 & npm run dev"]
