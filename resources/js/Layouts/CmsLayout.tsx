@@ -21,7 +21,9 @@ const adminOnlyItems = [
 
 export default function CmsLayout({ header, children }: Props) {
     const { auth } = usePage<{
-        auth: { user: { name: string; email: string; role: string } };
+        auth: {
+            user: { id: number; name: string; email: string; role: string };
+        };
     }>().props;
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
