@@ -164,19 +164,19 @@
 
 ### 4.1 Database
 
-- [ ] Buat migration `services` (title, slug, description, icon, price_estimate, order, is_active)
-- [ ] Buat Model `Service` + Seeder 3 layanan awal
+- [x] Buat migration `services` (title, slug, description, icon, price_estimate, order, is_active)
+- [x] Buat Model `Service` + Seeder 3 layanan awal
 
 ### 4.2 Route & Controller
 
-- [ ] Buat `ServiceController` — `index()` + `show($slug)`
-- [ ] Route `GET /layanan` + `GET /layanan/{slug}`
+- [x] Buat `ServiceController` — `index()` + `show($slug)`
+- [x] Route `GET /layanan` + `GET /layanan/{slug}`
 
 ### 4.3 React Page
 
-- [ ] Buat `resources/js/pages/Services/Index.tsx` — grid card semua layanan
-- [ ] Buat `resources/js/pages/Services/Show.tsx` — detail + CTA form konsultasi
-- [ ] SEO meta tags per halaman (gunakan slug sebagai basis)
+- [x] Buat `resources/js/pages/Services/Index.tsx` — grid card semua layanan
+- [x] Buat `resources/js/pages/Services/Show.tsx` — detail + CTA form konsultasi
+- [x] SEO meta tags per halaman (gunakan slug sebagai basis)
 
 ---
 
@@ -184,19 +184,19 @@
 
 ### 5.1 Database
 
-- [ ] Buat migration `portfolios` (title, slug, description, thumbnail, images JSON, category, client, year, status: draft/published)
-- [ ] Buat Model `Portfolio` + Seeder 3 proyek placeholder
+- [x] Buat migration `portfolios` (title, slug, description, thumbnail, images JSON, category, client, year, status: draft/published)
+- [x] Buat Model `Portfolio` + Seeder 3 proyek placeholder
 
 ### 5.2 Route & Controller
 
-- [ ] Buat `PortfolioController` — `index()` + `show($slug)`
-- [ ] Route `GET /portofolio` + `GET /portofolio/{slug}`
+- [x] Buat `PortfolioController` — `index()` + `show($slug)`
+- [x] Route `GET /portofolio` + `GET /portofolio/{slug}`
 
 ### 5.3 React Page
 
-- [ ] Buat `resources/js/pages/Portfolio/Index.tsx` — grid + filter kategori
-- [ ] Buat `resources/js/pages/Portfolio/Show.tsx` — detail + galeri gambar
-- [ ] SEO meta tags
+- [x] Buat `resources/js/pages/Portfolio/Index.tsx` — grid + filter kategori
+- [x] Buat `resources/js/pages/Portfolio/Show.tsx` — detail + galeri gambar
+- [x] SEO meta tags
 
 ---
 

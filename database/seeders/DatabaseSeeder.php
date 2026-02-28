@@ -24,8 +24,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             SiteSettingSeeder::class,
-            AboutSeeder::class,
+            AboutPageSeeder::class,
             ServiceSeeder::class,
+            PortfolioSeeder::class,
         ]);
     }
 }
