@@ -54,7 +54,7 @@
 
 - [ ] Ganti DB driver ke **PostgreSQL** di `.env`
 
-    ```
+    ```text
     DB_CONNECTION=pgsql
     DB_HOST=127.0.0.1
     DB_PORT=5432
@@ -110,9 +110,9 @@
 
 ### 2.1 Database
 
-- [x] Buat migration `site_settings` (key-value store)
+- [ ] Buat migration `site_settings` (key-value store)
 
-    ```
+    ```text
     id, key (string, unique), value (text), created_at, updated_at
     ```
 
@@ -225,22 +225,22 @@
 
 ### 7.1 Database
 
-- [ ] Buat migration `leads` (name, email, phone, service_interest, message, status: new/read/archived, created_at)
-- [ ] Buat Model `Lead`
+- [x] Buat migration `leads` (name, email, phone, service_interest, message, status: new/read/archived, created_at)
+- [x] Buat Model `Lead`
 
 ### 7.2 Route & Controller
 
-- [ ] Buat `ContactController` — `index()` + `store(Request $request)`
-- [ ] Route `GET /kontak` + `POST /kontak`
-- [ ] Validasi server-side: required, email, max:length, CSRF auto dari Inertia
+- [x] Buat `ContactController` — `index()` + `store(Request $request)`
+- [x] Route `GET /kontak` + `POST /kontak`
+- [x] Validasi server-side: required, email, max:length, CSRF auto dari Inertia
 
 ### 7.3 React Page
 
-- [ ] Buat `resources/js/pages/Contact.tsx`
-- [ ] Form konsultasi (nama, email, telepon, layanan diminati, pesan)
-- [ ] Flash message sukses/error setelah submit
-- [ ] Google Maps embed (iframe)
-- [ ] Info kontak: email, WhatsApp, alamat, jam operasional
+- [x] Buat `resources/js/pages/Contact.tsx`
+- [x] Form konsultasi (nama, email, telepon, layanan diminati, pesan)
+- [x] Flash message sukses/error setelah submit
+- [x] Google Maps embed (iframe)
+- [x] Info kontak: email, WhatsApp, alamat, jam operasional
 
 ---
 
@@ -248,34 +248,34 @@
 
 ### 8.1 Layout & Navigation
 
-- [ ] `CmsLayout.tsx` — sidebar, header, breadcrumb
-- [ ] Dashboard home: statistik card (total artikel, portofolio, lead baru hari ini)
+- [x] `CmsLayout.tsx` — sidebar, header, breadcrumb
+- [x] Dashboard home: statistik card (total artikel, portofolio, lead baru hari ini)
 
 ### 8.2 Manajemen Halaman Statis _(Admin only)_
 
-- [ ] `Admin\SiteSettingController` — form edit hero, about content
-- [ ] Route group `admin/` + middleware `EnsureRole:admin`
+- [x] `Admin\SiteSettingController` — form edit hero, about content
+- [x] Route group `admin/` + middleware `EnsureRole:admin`
 
 ### 8.3 Manajemen Portofolio _(Admin + Editor)_
 
-- [ ] `Admin\PortfolioController` — CRUD lengkap
-- [ ] Upload thumbnail via `storage/public`, simpan path ke DB
-- [ ] Toggle published/draft
+- [x] `Admin\PortfolioController` — CRUD lengkap
+- [x] Upload thumbnail via `storage/public`, simpan path ke DB
+- [x] Toggle published/draft
 
 ### 8.4 Manajemen Artikel _(Admin + Editor)_
 
-- [ ] `Admin\ArticleController` — CRUD lengkap
-- [ ] Integrasikan rich text editor: **Tiptap** (recommended)
-- [ ] Toggle published/draft + timestamp `published_at`
+- [x] `Admin\ArticleController` — CRUD lengkap
+- [x] Integrasikan rich text editor: **Tiptap** (recommended)
+- [x] Toggle published/draft + timestamp `published_at`
 
 ### 8.5 Manajemen Layanan & Tim _(Admin only)_
 
-- [ ] `Admin\ServiceController` — CRUD + reorder
-- [ ] `Admin\TeamMemberController` — CRUD + upload foto
+- [x] `Admin\ServiceController` — CRUD + reorder
+- [x] `Admin\TeamMemberController` — CRUD + upload foto
 
 ### 8.6 Manajemen User _(Admin only)_
 
-- [ ] `Admin\UserController` — CRUD akun, assign role admin/editor
+- [x] `Admin\UserController` — CRUD akun, assign role admin/editor
 
 ---
 
@@ -480,7 +480,7 @@ npx playwright test  # jika pakai Playwright
 
 - [ ] Buat `.env.docker` — environment variables yang mengarah ke service names
 
-    ```
+    ```text
     DB_HOST=postgres      # bukan 127.0.0.1
     REDIS_HOST=redis
     MAIL_HOST=mailpit
@@ -519,7 +519,7 @@ npx playwright test  # jika pakai Playwright
     📝 Notes: Gunakan GitHub Environments dengan reviewer approval sebelum deploy ke prod
 
 - [ ] Setup GitHub Secrets:
-    ```
+    ```text
     PRODUCTION_HOST       (IP VPS)
     PRODUCTION_USER       (user SSH)
     PRODUCTION_SSH_KEY    (private key)
@@ -529,7 +529,7 @@ npx playwright test  # jika pakai Playwright
 ### 14.3 Branch Strategy
 
 - [ ] Gunakan **Git Flow sederhana**:
-    ```
+    ```text
     main       ← production only, protected, deploy via CD
     develop    ← staging/integration, CI runs here
     feat/*     ← fitur baru, PR ke develop
@@ -540,7 +540,7 @@ npx playwright test  # jika pakai Playwright
 
 ## �📦 Migration Order (Urutan Jalankan)
 
-```
+```text
 1. users (default Breeze — tambahkan kolom role)
 2. site_settings
 3. about_content
