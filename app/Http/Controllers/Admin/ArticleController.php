@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class ArticleController extends Controller
 {
@@ -42,7 +44,15 @@ class ArticleController extends Controller
         }
 
         if ($request->hasFile('thumbnail')) {
-            $data['thumbnail'] = $request->file('thumbnail')->store('articles/thumbnails', 'public');
+            $manager = new ImageManager(new Driver());
+            $imageFile = $request->file('thumbnail');
+            $filename = uniqid() . '_' . time() . '.webp';
+            $path = 'articles/thumbnails/' . $filename;
+
+            $processedImage = $manager->read($imageFile)->toWebp(80);
+            Storage::disk('public')->put($path, $processedImage);
+
+            $data['thumbnail'] = $path;
         }
 
         Article::create($data);
@@ -78,7 +88,15 @@ class ArticleController extends Controller
             if ($article->thumbnail) {
                 Storage::disk('public')->delete($article->thumbnail);
             }
-            $data['thumbnail'] = $request->file('thumbnail')->store('articles/thumbnails', 'public');
+            $manager = new ImageManager(new Driver());
+            $imageFile = $request->file('thumbnail');
+            $filename = uniqid() . '_' . time() . '.webp';
+            $path = 'articles/thumbnails/' . $filename;
+
+            $processedImage = $manager->read($imageFile)->toWebp(80);
+            Storage::disk('public')->put($path, $processedImage);
+
+            $data['thumbnail'] = $path;
         }
 
         $article->update($data);

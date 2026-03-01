@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class PortfolioController extends Controller
 {
@@ -39,14 +41,29 @@ class PortfolioController extends Controller
 
         $data['slug'] = Str::slug($data['title']);
         
+        $manager = new ImageManager(new Driver());
+
         if ($request->hasFile('thumbnail')) {
-            $data['thumbnail'] = $request->file('thumbnail')->store('portfolios/thumbnails', 'public');
+            $imageFile = $request->file('thumbnail');
+            $filename = uniqid() . '_thumb_' . time() . '.webp';
+            $path = 'portfolios/thumbnails/' . $filename;
+
+            $processedImage = $manager->read($imageFile)->toWebp(80);
+            Storage::disk('public')->put($path, $processedImage);
+
+            $data['thumbnail'] = $path;
         }
 
         $imagePaths = [];
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $imagePaths[] = $image->store('portfolios/gallery', 'public');
+            foreach ($request->file('images') as $imageFile) {
+                $filename = uniqid() . '_gallery_' . time() . '.webp';
+                $path = 'portfolios/gallery/' . $filename;
+
+                $processedImage = $manager->read($imageFile)->toWebp(80);
+                Storage::disk('public')->put($path, $processedImage);
+
+                $imagePaths[] = $path;
             }
         }
         $data['images'] = $imagePaths;
@@ -80,11 +97,20 @@ class PortfolioController extends Controller
         $data = $request->validate($rules);
         $data['slug'] = Str::slug($data['title']);
 
+        $manager = new ImageManager(new Driver());
+
         if ($request->hasFile('thumbnail')) {
             if ($portfolio->thumbnail) {
                 Storage::disk('public')->delete($portfolio->thumbnail);
             }
-            $data['thumbnail'] = $request->file('thumbnail')->store('portfolios/thumbnails', 'public');
+            $imageFile = $request->file('thumbnail');
+            $filename = uniqid() . '_thumb_' . time() . '.webp';
+            $path = 'portfolios/thumbnails/' . $filename;
+
+            $processedImage = $manager->read($imageFile)->toWebp(80);
+            Storage::disk('public')->put($path, $processedImage);
+
+            $data['thumbnail'] = $path;
         }
 
         if ($request->hasFile('images')) {
@@ -95,8 +121,14 @@ class PortfolioController extends Controller
             }
             
             $imagePaths = [];
-            foreach ($request->file('images') as $image) {
-                $imagePaths[] = $image->store('portfolios/gallery', 'public');
+            foreach ($request->file('images') as $imageFile) {
+                $filename = uniqid() . '_gallery_' . time() . '.webp';
+                $path = 'portfolios/gallery/' . $filename;
+
+                $processedImage = $manager->read($imageFile)->toWebp(80);
+                Storage::disk('public')->put($path, $processedImage);
+
+                $imagePaths[] = $path;
             }
             $data['images'] = $imagePaths;
         }
