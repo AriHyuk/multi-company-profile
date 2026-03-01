@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
@@ -15,6 +16,10 @@ Route::get('/portofolio', [PortfolioController::class, 'index'])->name('portfoli
 Route::get('/portofolio/{slug}', [PortfolioController::class, 'show'])->name('portfolios.show');
 Route::get('/artikel', [\App\Http\Controllers\ArticleController::class, 'index'])->name('articles.index');
 Route::get('/artikel/{slug}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('articles.show');
+
+// ── Contact & Lead Form ───────────────────────────────────────────────────
+Route::get('/kontak', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/kontak', [ContactController::class, 'store'])->name('contact.store');
 
 // ── Authenticated User Routes ─────────────────────────────────────────────────
 Route::get('/dashboard', function () {
