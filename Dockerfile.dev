@@ -10,10 +10,27 @@ RUN apk add --no-cache \
     unzip \
     libzip-dev \
     bash \
-    icu-dev
+    icu-dev \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    libwebp-dev
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_pgsql pcntl zip intl
+# Install PHP extensions + OPcache
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install pdo_pgsql pcntl zip intl gd opcache
+
+# OPcache tuning — kunci performa dev di Docker Windows
+RUN { \
+    echo "opcache.enable=1"; \
+    echo "opcache.enable_cli=1"; \
+    echo "opcache.memory_consumption=256"; \
+    echo "opcache.interned_strings_buffer=16"; \
+    echo "opcache.max_accelerated_files=20000"; \
+    echo "opcache.validate_timestamps=1"; \
+    echo "opcache.revalidate_freq=0"; \
+    echo "opcache.fast_shutdown=1"; \
+} > /usr/local/etc/php/conf.d/opcache.ini
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
