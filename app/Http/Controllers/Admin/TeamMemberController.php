@@ -7,6 +7,8 @@ use App\Models\TeamMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class TeamMemberController extends Controller
 {
@@ -34,7 +36,15 @@ class TeamMemberController extends Controller
         ]);
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('team-members', 'public');
+            $manager = new ImageManager(new Driver());
+            $imageFile = $request->file('photo');
+            $filename = uniqid() . '_' . time() . '.webp';
+            $path = 'team-members/' . $filename;
+
+            $processedImage = $manager->read($imageFile)->toWebp(80);
+            Storage::disk('public')->put($path, $processedImage);
+
+            $data['photo'] = $path;
         }
 
         TeamMember::create($data);
@@ -64,7 +74,15 @@ class TeamMemberController extends Controller
             if ($teamMember->photo) {
                 Storage::disk('public')->delete($teamMember->photo);
             }
-            $data['photo'] = $request->file('photo')->store('team-members', 'public');
+            $manager = new ImageManager(new Driver());
+            $imageFile = $request->file('photo');
+            $filename = uniqid() . '_' . time() . '.webp';
+            $path = 'team-members/' . $filename;
+
+            $processedImage = $manager->read($imageFile)->toWebp(80);
+            Storage::disk('public')->put($path, $processedImage);
+
+            $data['photo'] = $path;
         }
 
         $teamMember->update($data);

@@ -1,4 +1,5 @@
-import { Head, Link } from "@inertiajs/react";
+import Seo from "@/Components/Seo";
+import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 
 interface Article {
@@ -39,7 +40,10 @@ export default function ArticleIndex({ articles }: Props) {
 
     return (
         <PublicLayout>
-            <Head title="Artikel & Berita" />
+            <Seo
+                title="Artikel & Berita"
+                description="Temukan wawasan, cerita, dan update terbaru dari Multi Company Profiles."
+            />
 
             {/* Hero Section */}
             <section className="bg-slate-900 py-24 text-white relative overflow-hidden">
@@ -83,6 +87,7 @@ export default function ArticleIndex({ articles }: Props) {
                                                 }
                                                 alt={article.title}
                                                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                loading="lazy"
                                             />
                                             <div className="absolute top-4 left-4">
                                                 <span className="inline-flex items-center rounded-full bg-blue-600 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-lg">

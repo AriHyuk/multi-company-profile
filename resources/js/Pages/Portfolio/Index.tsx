@@ -1,4 +1,5 @@
-import { Head, Link } from "@inertiajs/react";
+import Seo from "@/Components/Seo";
+import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 
 interface Portfolio {
@@ -19,7 +20,10 @@ interface Props {
 export default function PortfolioIndex({ portfolios }: Props) {
     return (
         <PublicLayout>
-            <Head title="Portofolio Kami" />
+            <Seo
+                title="Portofolio Kami"
+                description="Kumpulan karya dan proyek terbaik yang telah kami selesaikan dengan penuh dedikasi."
+            />
 
             {/* Hero */}
             <section className="bg-gradient-to-br from-slate-900 to-slate-800 py-20 text-white">
@@ -57,6 +61,7 @@ export default function PortfolioIndex({ portfolios }: Props) {
                                             }
                                             alt={item.title}
                                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                            loading="lazy"
                                         />
                                         {item.category && (
                                             <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-slate-900 shadow-sm backdrop-blur-sm">

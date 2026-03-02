@@ -1,4 +1,5 @@
-import { Head, Link } from "@inertiajs/react";
+import Seo from "@/Components/Seo";
+import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 
 interface Portfolio {
@@ -23,14 +24,11 @@ export default function PortfolioShow({ portfolio }: Props) {
 
     return (
         <PublicLayout>
-            <Head title={pageTitle}>
-                <meta name="description" content={metaDescription} />
-                <meta property="og:title" content={pageTitle} />
-                <meta property="og:description" content={metaDescription} />
-                {portfolio.thumbnail && (
-                    <meta property="og:image" content={portfolio.thumbnail} />
-                )}
-            </Head>
+            <Seo
+                title={pageTitle}
+                description={metaDescription}
+                image={portfolio.thumbnail ?? undefined}
+            />
 
             {/* Hero Section */}
             <section className="relative overflow-hidden bg-slate-900 py-24 text-white">
@@ -148,6 +146,7 @@ export default function PortfolioShow({ portfolio }: Props) {
                                             src={img}
                                             alt={`${portfolio.title} - Galllery ${index + 1}`}
                                             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            loading="lazy"
                                         />
                                     </div>
                                 ))}

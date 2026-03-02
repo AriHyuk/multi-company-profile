@@ -1,3 +1,0 @@
-resources/js/Layouts/CmsLayout.tsx(23,30): error TS2344: Type '{ auth: { user: { name: string; email: string; role: string; }; }; }' does not satisfy the constraint 'PageProps'.
-  The types of 'auth.user' are incompatible between these types.
-    Property 'id' is missing in type '{ name: string; email: string; role: string; }' but required in type 'User'.

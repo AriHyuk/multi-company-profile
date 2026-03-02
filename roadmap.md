@@ -306,15 +306,15 @@
 
 ## 🔵 EPIC 10 — SEO & Performance
 
-- [ ] Install `spatie/laravel-sitemap`
+- [x] Install `spatie/laravel-sitemap`
 
     ```bash
     composer require spatie/laravel-sitemap
     ```
 
-- [ ] Generate `sitemap.xml` otomatis (artikel + portofolio + halaman statis)
-- [ ] Buat `public/robots.txt`
-- [ ] Terapkan canonical URL di semua page via Inertia `<Head>`
+- [x] Generate `sitemap.xml` otomatis (artikel + portofolio + halaman statis)
+- [x] Buat `public/robots.txt`
+- [x] Terapkan canonical URL di semua page via Inertia `<Head>`
 - [ ] Image optimization: upload → simpan versi WebP, lazy loading di frontend
 - [ ] Audit Google PageSpeed Insights, fix LCP > 2.5s
 - [ ] Submit sitemap ke Google Search Console setelah deployment

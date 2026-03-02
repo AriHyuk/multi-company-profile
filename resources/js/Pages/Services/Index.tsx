@@ -1,4 +1,5 @@
-import { Head, Link } from "@inertiajs/react";
+import Seo from "@/Components/Seo";
+import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 
 interface Service {
@@ -19,7 +20,10 @@ interface Props {
 export default function ServicesIndex({ services }: Props) {
     return (
         <PublicLayout>
-            <Head title="Layanan Kami" />
+            <Seo
+                title="Layanan Kami"
+                description="Temukan berbagai layanan digital terbaik dari kami untuk membantu pertumbuhan bisnis Anda."
+            />
 
             {/* Hero */}
             <section className="bg-gradient-to-br from-slate-900 to-slate-800 py-20 text-white">

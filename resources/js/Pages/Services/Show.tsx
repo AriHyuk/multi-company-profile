@@ -1,4 +1,5 @@
-import { Head, Link } from "@inertiajs/react";
+import Seo from "@/Components/Seo";
+import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 
 interface Service {
@@ -22,11 +23,7 @@ export default function ServicesShow({ service }: Props) {
 
     return (
         <PublicLayout>
-            <Head title={pageTitle}>
-                <meta name="description" content={metaDescription} />
-                <meta property="og:title" content={pageTitle} />
-                <meta property="og:description" content={metaDescription} />
-            </Head>
+            <Seo title={pageTitle} description={metaDescription} />
 
             {/* Hero */}
             <section className="bg-gradient-to-br from-slate-900 to-slate-800 py-20 text-white">

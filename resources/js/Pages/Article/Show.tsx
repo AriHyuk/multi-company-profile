@@ -1,4 +1,5 @@
-import { Head, Link } from "@inertiajs/react";
+import Seo from "@/Components/Seo";
+import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 
 interface Article {
@@ -31,10 +32,11 @@ export default function ArticleShow({ article }: Props) {
 
     return (
         <PublicLayout>
-            <Head>
-                <title>{`${article.title} — Artikel`}</title>
-                <meta name="description" content={article.excerpt || ""} />
-            </Head>
+            <Seo
+                title={`${article.title} — Artikel`}
+                description={article.excerpt || ""}
+                image={article.thumbnail ?? undefined}
+            />
 
             {/* Article Header */}
             <article className="bg-white">

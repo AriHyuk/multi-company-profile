@@ -1,4 +1,4 @@
-import { Head } from "@inertiajs/react";
+import Seo from "@/Components/Seo";
 import PublicLayout from "@/Layouts/PublicLayout";
 
 interface AboutContent {
@@ -28,7 +28,13 @@ interface Props {
 export default function About({ content, teams }: Props) {
     return (
         <PublicLayout>
-            <Head title="Tentang Kami - Multi Company Profiles" />
+            <Seo
+                title="Tentang Kami"
+                description={
+                    content?.description ??
+                    "Informasi tentang perusahaan, visi, dan misi kami."
+                }
+            />
 
             <div className="py-24 bg-white sm:py-32">
                 <div className="px-6 lg:px-8 max-w-7xl mx-auto">
@@ -136,6 +142,7 @@ export default function About({ content, teams }: Props) {
                                                     className="object-cover h-full w-full"
                                                     src={person.photo}
                                                     alt={person.name}
+                                                    loading="lazy"
                                                 />
                                             ) : (
                                                 <svg

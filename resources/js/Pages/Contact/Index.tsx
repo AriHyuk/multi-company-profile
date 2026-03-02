@@ -1,4 +1,5 @@
-import { Head, useForm } from "@inertiajs/react";
+import Seo from "@/Components/Seo";
+import { useForm } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 import { FormEvent } from "react";
 
@@ -21,7 +22,10 @@ export default function Contact() {
 
     return (
         <PublicLayout>
-            <Head title="Hubungi Kami - Multi Company Profiles" />
+            <Seo
+                title="Hubungi Kami"
+                description="Punya pertanyaan atau butuh konsultasi untuk bisnis Anda? Jangan ragu untuk menghubungi tim kami. Kami siap membantu Anda."
+            />
 
             <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
                 {/* Background decoration elements */}
