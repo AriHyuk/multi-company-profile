@@ -24,6 +24,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             SiteSettingSeeder::class,
+            AboutPageSeeder::class,
+            ServiceSeeder::class,
+            PortfolioSeeder::class,
+            ArticleSeeder::class,
         ]);
     }
 }
