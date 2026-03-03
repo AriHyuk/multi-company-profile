@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        --brand-primary: #003366;
+        --brand-accent: #00cccc;
+        --brand-secondary: #f8fafc;
+        --brand-bridge: #0055aa;
+
+        --midnight-bg: #020617;
+        --midnight-surface: #0f172a;
+        --midnight-text: #f8fafc;
+        --midnight-glow: #00cccc;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply antialiased;
+        transition:
+            background-color 0.3s ease,
+            color 0.3s ease;
+    }
+}
