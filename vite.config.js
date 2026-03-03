@@ -10,6 +10,10 @@ export default defineConfig({
         hmr: {
             host: "localhost",
         },
+        // 👇 Tambahin blok watch ini sir
+        watch: {
+            usePolling: true,
+        },
     },
     plugins: [
         laravel({

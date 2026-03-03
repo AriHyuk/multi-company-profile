@@ -2,6 +2,8 @@ import Seo from "@/Components/Seo";
 import { Link, useForm } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 import { FormEvent } from "react";
+import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 interface Props {
     hero: {
@@ -54,34 +56,89 @@ interface HeroProps {
 
 function HeroSection({ title, subtitle, ctaLabel, ctaUrl }: HeroProps) {
     return (
-        <section className="relative overflow-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-purple-900 text-white">
-            <div className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-indigo-500 opacity-20 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-40 -left-20 h-80 w-80 rounded-full bg-purple-500 opacity-20 blur-3xl" />
+        <section className="relative overflow-hidden bg-brand-secondary">
+            {/* Background Orbs/Glow */}
+            <div className="pointer-events-none absolute -top-24 -right-24 h-[500px] w-[500px] rounded-full bg-brand-accent opacity-10 blur-[120px]" />
+            <div className="pointer-events-none absolute -bottom-24 -left-24 h-[400px] w-[400px] rounded-full bg-brand-primary opacity-5 blur-[100px]" />
 
-            <div className="relative mx-auto max-w-7xl px-4 py-32 sm:px-6 sm:py-40 lg:px-8">
-                <div className="mx-auto max-w-3xl text-center">
-                    <span className="mb-4 inline-block rounded-full bg-indigo-500/20 px-4 py-1.5 text-sm font-semibold text-indigo-300 ring-1 ring-indigo-400/30">
-                        Digital Agency
+            <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+                <div className="flex flex-col items-center text-center">
+                    <span className="mb-6 inline-flex items-center rounded-full bg-brand-primary/5 px-4 py-1.5 text-sm font-semibold text-brand-primary ring-1 ring-brand-primary/10">
+                        🚀 DIGIKOVA Solutions
                     </span>
-                    <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-                        {title}
+
+                    <h1 className="max-w-4xl text-4xl font-black leading-[1.1] tracking-tight text-brand-primary sm:text-6xl lg:text-7xl">
+                        {title.split(" ").map((word, i) =>
+                            word.toLowerCase() === "digital" ||
+                            word.toLowerCase() === "bisnis" ? (
+                                <span
+                                    key={i}
+                                    className="bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent"
+                                >
+                                    {" "}
+                                    {word}{" "}
+                                </span>
+                            ) : (
+                                word + " "
+                            ),
+                        )}
                     </h1>
-                    <p className="mt-6 text-lg text-indigo-200 sm:text-xl">
+
+                    <p className="mt-8 max-w-2xl text-lg leading-relaxed text-gray-600 sm:text-xl">
                         {subtitle}
                     </p>
-                    <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                        <Link
-                            href={ctaUrl}
-                            className="rounded-xl bg-white px-8 py-3.5 text-sm font-bold text-indigo-900 shadow-lg transition hover:bg-indigo-50 hover:shadow-xl"
-                        >
-                            {ctaLabel}
+
+                    <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                        <Link href={ctaUrl}>
+                            <PrimaryButton className="px-10 py-4 text-base capitalize shadow-xl shadow-brand-primary/20">
+                                {ctaLabel}
+                            </PrimaryButton>
                         </Link>
-                        <Link
-                            href="/portofolio"
-                            className="rounded-xl border border-white/30 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
-                        >
-                            Lihat Portofolio →
+
+                        <Link href="/portfolio">
+                            <SecondaryButton className="px-10 py-4 text-base capitalize border-brand-primary/10 text-brand-primary hover:bg-brand-primary/5">
+                                Lihat Portofolio
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="ml-2 h-5 w-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                    />
+                                </svg>
+                            </SecondaryButton>
                         </Link>
+                    </div>
+
+                    {/* Trust Factor / Minimalist Stats */}
+                    <div className="mt-20 flex flex-wrap justify-center gap-8 grayscale opacity-60">
+                        <div className="flex items-center gap-2">
+                            <span className="text-2xl font-bold text-brand-primary leading-none">
+                                50+
+                            </span>
+                            <span className="text-xs font-medium uppercase tracking-wider text-gray-500">
+                                Proyek
+                                <br />
+                                Selesai
+                            </span>
+                        </div>
+                        <div className="h-10 w-[1px] bg-gray-200 hidden sm:block" />
+                        <div className="flex items-center gap-2">
+                            <span className="text-2xl font-bold text-brand-primary leading-none">
+                                20+
+                            </span>
+                            <span className="text-xs font-medium uppercase tracking-wider text-gray-500">
+                                Klien
+                                <br />
+                                Puas
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
