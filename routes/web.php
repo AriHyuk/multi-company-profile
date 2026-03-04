@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
 // ── Public Routes ─────────────────────────────────────────────────────────────
@@ -16,6 +17,7 @@ Route::get('/portofolio', [PortfolioController::class, 'index'])->name('portfoli
 Route::get('/portofolio/{slug}', [PortfolioController::class, 'show'])->name('portfolios.show');
 Route::get('/artikel', [\App\Http\Controllers\ArticleController::class, 'index'])->name('articles.index');
 Route::get('/artikel/{slug}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('articles.show');
+Route::get('/tim', [TeamController::class, 'index'])->name('team.index');
 
 // ── Contact & Lead Form ───────────────────────────────────────────────────
 Route::get('/kontak', [ContactController::class, 'index'])->name('contact.index');

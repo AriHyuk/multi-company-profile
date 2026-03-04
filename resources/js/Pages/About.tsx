@@ -10,22 +10,11 @@ interface AboutContent {
     logo: string | null;
 }
 
-interface TeamMember {
-    id: number;
-    name: string;
-    role: string;
-    photo: string | null;
-    bio: string;
-    order: number;
-    is_active: boolean;
-}
-
 interface Props {
     content: AboutContent;
-    teams: TeamMember[];
 }
 
-export default function About({ content, teams }: Props) {
+export default function About({ content }: Props) {
     return (
         <PublicLayout>
             <Seo
@@ -113,63 +102,6 @@ export default function About({ content, teams }: Props) {
                             </div>
                         </dl>
                     </div>
-
-                    {/* Team Section */}
-                    {teams && teams.length > 0 && (
-                        <div className="mx-auto mt-24 max-w-7xl px-6 lg:px-8">
-                            <div className="mx-auto max-w-2xl lg:mx-0">
-                                <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                                    Tim Kami
-                                </h2>
-                                <p className="mt-6 text-lg leading-8 text-gray-600">
-                                    Orang-orang dibalik layar yang terus
-                                    berinovasi dan berkarya membangun layanan
-                                    terbaik untuk Anda.
-                                </p>
-                            </div>
-                            <ul
-                                role="list"
-                                className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
-                            >
-                                {teams.map((person) => (
-                                    <li
-                                        key={person.id}
-                                        className="flex flex-col gap-6 p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-                                    >
-                                        <div className="h-48 w-full bg-gray-100 rounded-xl overflow-hidden mb-4 flex items-center justify-center">
-                                            {person.photo ? (
-                                                <img
-                                                    className="object-cover h-full w-full"
-                                                    src={person.photo}
-                                                    alt={person.name}
-                                                    loading="lazy"
-                                                />
-                                            ) : (
-                                                <svg
-                                                    className="h-24 w-24 text-gray-300"
-                                                    fill="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                                                </svg>
-                                            )}
-                                        </div>
-                                        <div>
-                                            <h3 className="text-lg font-semibold leading-7 tracking-tight text-gray-900">
-                                                {person.name}
-                                            </h3>
-                                            <p className="text-sm font-semibold leading-6 text-blue-600">
-                                                {person.role}
-                                            </p>
-                                        </div>
-                                        <p className="text-base leading-7 text-gray-600 flex-grow">
-                                            {person.bio}
-                                        </p>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
                 </div>
             </div>
         </PublicLayout>
