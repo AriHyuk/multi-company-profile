@@ -102,16 +102,16 @@ function HeroCTAs({
     return (
         <div className="hero-animate-4 mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
             <Link href={ctaUrl}>
-                <PrimaryButton className="px-8 py-3.5 text-base capitalize shadow-xl shadow-brand-primary/25 transition-all hover:scale-105 hover:shadow-brand-primary/40">
+                <PrimaryButton className="px-8 py-3.5 text-base capitalize shadow-xl shadow-brand-primary/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-brand-primary/50 hover:ring-2 hover:ring-brand-accent/50">
                     {ctaLabel}
                 </PrimaryButton>
             </Link>
             <Link href="/portfolio">
-                <SecondaryButton className="px-8 py-3.5 text-base capitalize border-brand-primary/15 text-brand-primary hover:bg-brand-primary/5 transition-all hover:scale-105">
+                <SecondaryButton className="group px-8 py-3.5 text-base capitalize border-brand-primary/15 text-brand-primary hover:bg-brand-primary/5 transition-all duration-300 hover:-translate-y-1">
                     Lihat Portofolio
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="ml-2 h-5 w-5"
+                        className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1.5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -138,7 +138,7 @@ const STATS = [
 
 function HeroStats() {
     return (
-        <div className="hero-animate-5 mt-12 flex items-center gap-8">
+        <div className="hero-animate-5 mt-10 flex items-center gap-8">
             {STATS.map((stat, i) => (
                 <>
                     {i > 0 && (
@@ -162,93 +162,147 @@ function HeroStats() {
 }
 
 /** Glassmorphism visual placeholder (right column) */
-const VISUAL_TAGS = ["Design", "Code", "Launch"] as const;
-
 function HeroVisual() {
     return (
-        <div className="hero-animate-2 flex items-center justify-center lg:justify-end">
-            <div className="hero-visual-float relative w-full max-w-[480px] aspect-square">
-                {/* Slow-spinning outer rings */}
-                <div className="hero-ring-spin absolute inset-0 rounded-full border border-brand-accent/20" />
-                <div
-                    className="hero-ring-spin absolute inset-4 rounded-full border border-brand-primary/10"
-                    style={{
-                        animationDirection: "reverse",
-                        animationDuration: "30s",
-                    }}
-                />
+        <div className="hero-animate-2 flex items-center justify-center lg:justify-end w-full lg:-mt-28">
+            <div className="hero-visual-float relative w-full h-[480px] sm:h-[550px] max-w-[500px] lg:max-w-[540px]">
+                {/* Background glow */}
+                <div className="absolute inset-10 rounded-full bg-gradient-to-tr from-brand-primary/20 to-brand-accent/20 blur-3xl z-0" />
 
-                {/* Glassmorphism card */}
-                <div className="absolute inset-8 rounded-3xl bg-gradient-to-br from-white/70 via-white/50 to-brand-accent/10 backdrop-blur-xl shadow-2xl shadow-brand-primary/15 ring-1 ring-white/60 flex items-center justify-center overflow-hidden">
-                    {/* Gradient mesh */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/8 via-transparent to-brand-accent/15" />
+                {/* Bento Grid layout */}
+                <div className="relative h-full w-full z-10">
+                    {/* Main big card: Performance Chart */}
+                    <div className="absolute top-0 left-4 right-12 sm:right-16 bottom-[52%] rounded-3xl bg-white/80 backdrop-blur-xl shadow-2xl shadow-brand-primary/10 ring-1 ring-black/5 p-5 sm:p-6 flex flex-col justify-between overflow-hidden group">
+                        <div className="relative z-10 flex items-center justify-between">
+                            <div>
+                                <h3 className="text-sm font-bold text-gray-900">
+                                    Traffic Growth
+                                </h3>
+                                <p className="text-[10px] sm:text-xs text-brand-primary font-medium">
+                                    +142% this month
+                                </p>
+                            </div>
+                            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
+                                <svg
+                                    className="h-5 w-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                        {/* Abstract Chart Bars */}
+                        <div className="relative z-10 mt-6 flex items-end gap-2 h-24 sm:h-28">
+                            {[40, 60, 30, 80, 50, 90, 100].map((h, i) => (
+                                <div
+                                    key={i}
+                                    className="w-full bg-brand-primary/10 rounded-t-md relative overflow-hidden group-hover:bg-brand-primary/20 transition-colors duration-500"
+                                    style={{ height: `${h}%` }}
+                                >
+                                    <div
+                                        className="absolute bottom-0 w-full bg-brand-primary transition-all duration-700 delay-100"
+                                        style={{
+                                            height: h > 70 ? "100%" : "0%",
+                                        }}
+                                    />
+                                    {h > 70 && (
+                                        <div className="absolute bottom-0 w-full h-full bg-gradient-to-t from-brand-primary to-brand-accent opacity-80" />
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                        {/* Decorative mesh */}
+                        <div className="absolute -bottom-10 -right-10 h-32 w-32 bg-brand-accent/20 blur-2xl rounded-full pointer-events-none" />
+                    </div>
 
-                    {/* Drifting blobs */}
-                    <div className="hero-drift absolute -top-8 -right-8 h-40 w-40 rounded-full bg-gradient-to-br from-brand-accent/30 to-brand-primary/20 blur-2xl" />
-                    <div
-                        className="hero-drift absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-gradient-to-tr from-brand-primary/25 to-brand-accent/15 blur-xl"
-                        style={{ animationDelay: "4s" }}
-                    />
+                    {/* Small Card: Code Snippet */}
+                    <div className="absolute top-[52%] left-4 right-[35%] sm:right-[40%] bottom-0 rounded-3xl bg-gray-950 shadow-2xl shadow-gray-900/40 ring-1 ring-white/10 p-5 overflow-hidden flex flex-col">
+                        <div className="flex items-center gap-1.5 mb-4">
+                            <div className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
+                            <div className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
+                            <div className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
+                        </div>
+                        <div className="font-mono text-[10px] sm:text-xs text-brand-accent space-y-2 lg:space-y-2.5 opacity-90 overflow-hidden">
+                            <p>
+                                <span className="text-purple-400">const</span>{" "}
+                                <span className="text-blue-400">App</span> = (){" "}
+                                {"=>"} {"{"}
+                            </p>
+                            <p className="pl-4">
+                                <span className="text-purple-400">return</span>{" "}
+                                (
+                            </p>
+                            <p className="pl-6 sm:pl-8 text-gray-300">
+                                {"<Digikova"}
+                            </p>
+                            <p className="pl-10 sm:pl-12 text-teal-300">
+                                quality<span className="text-white">=</span>
+                                <span className="text-green-300">
+                                    "premium"
+                                </span>
+                            </p>
+                            <p className="pl-10 sm:pl-12 text-teal-300">
+                                speed<span className="text-white">=</span>
+                                <span className="text-purple-400">{"{"}</span>
+                                <span className="text-orange-300">100</span>
+                                <span className="text-purple-400">{"}"}</span>
+                            </p>
+                            <p className="pl-6 sm:pl-8 text-gray-300">{"/>"}</p>
+                            <p className="pl-4">);</p>
+                            <p>{"}"};</p>
+                        </div>
+                    </div>
 
-                    {/* Inner placeholder content */}
-                    <div className="relative z-10 flex flex-col items-center gap-4 p-8 text-center">
-                        <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-primary to-brand-accent shadow-lg shadow-brand-primary/30">
+                    {/* Small Card: UI/Design Elements */}
+                    <div className="absolute top-[15%] right-0 sm:-right-4 h-20 rounded-3xl bg-white shadow-2xl shadow-brand-primary/10 ring-1 ring-black/5 flex items-center p-3 gap-3 z-20">
+                        <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-brand-accent to-brand-primary p-2.5 text-white shadow-inner flex-shrink-0">
                             <svg
-                                className="h-10 w-10 text-white"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
-                                strokeWidth={1.5}
                             >
                                 <path
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
-                                    d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"
-                                />
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"
+                                    strokeWidth={2}
+                                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
                                 />
                             </svg>
                         </div>
-
-                        <p className="text-sm font-semibold tracking-widest text-brand-primary/50 uppercase">
-                            Hero Visual
-                        </p>
-                        <p className="text-xs text-gray-400 max-w-[160px] leading-relaxed">
-                            Tempatkan aset gambar hero Anda di sini
-                        </p>
-
-                        {/* Tag pills */}
-                        <div className="mt-2 flex flex-wrap justify-center gap-2">
-                            {VISUAL_TAGS.map((tag) => (
-                                <span
-                                    key={tag}
-                                    className="rounded-full bg-brand-primary/8 px-3 py-1 text-xs font-semibold text-brand-primary ring-1 ring-brand-primary/15"
-                                >
-                                    {tag}
-                                </span>
-                            ))}
+                        <div className="pr-4 whitespace-nowrap hidden sm:block">
+                            <h4 className="text-sm font-bold text-gray-800">
+                                Pixel Perfect
+                            </h4>
+                            <p className="text-[10px] text-gray-500">
+                                Design Systems
+                            </p>
                         </div>
                     </div>
 
-                    {/* Corner accent dots */}
-                    <div className="absolute top-4 right-4 h-3 w-3 rounded-full bg-brand-accent/60" />
-                    <div className="absolute bottom-4 left-4 h-2 w-2 rounded-full bg-brand-primary/40" />
-                    <div className="absolute top-1/2 left-4 h-1.5 w-8 rounded-full bg-brand-accent/30" />
-                </div>
-
-                {/* Floating badge chips */}
-                <div className="absolute -top-2 left-1/4 rounded-xl bg-white px-3 py-1.5 shadow-lg shadow-brand-primary/10 ring-1 ring-gray-100">
-                    <span className="text-xs font-bold text-brand-primary">
-                        ⚡ Fast Delivery
-                    </span>
-                </div>
-                <div className="absolute -bottom-2 right-1/4 rounded-xl bg-white px-3 py-1.5 shadow-lg shadow-brand-primary/10 ring-1 ring-gray-100">
-                    <span className="text-xs font-bold text-brand-accent">
-                        ✦ Premium Quality
-                    </span>
+                    {/* Floating Notifications */}
+                    <div
+                        className="absolute -bottom-4 left-10 sm:left-12 rounded-2xl bg-gray-950/90 backdrop-blur-md shadow-2xl ring-1 ring-white/10 px-4 py-3 flex items-center gap-3 z-30 animate-bounce"
+                        style={{ animationDuration: "3s" }}
+                    >
+                        <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
+                        <p className="text-xs font-medium text-white">
+                            Deploy{" "}
+                            <span className="text-green-400">Success</span>
+                        </p>
+                    </div>
+                    {/* Decorative blobs */}
+                    <div className="hero-drift absolute -top-8 -right-8 h-32 w-32 rounded-full bg-brand-accent/30 blur-2xl -z-10" />
+                    <div
+                        className="hero-drift absolute -bottom-10 left-[40%] h-40 w-40 rounded-full bg-brand-primary/30 blur-3xl -z-10"
+                        style={{ animationDelay: "2s" }}
+                    />
                 </div>
             </div>
         </div>
@@ -264,7 +318,7 @@ export default function HeroSection({
     ctaUrl,
 }: HeroProps) {
     return (
-        <section className="relative overflow-hidden bg-brand-secondary min-h-[90vh] flex items-center">
+        <section className="relative overflow-hidden bg-brand-secondary">
             {/* Self-contained animation keyframes */}
             <style dangerouslySetInnerHTML={{ __html: heroAnimationStyles }} />
 
@@ -275,11 +329,11 @@ export default function HeroSection({
                 style={{ animationDelay: "2s" }}
             />
 
-            <div className="relative mx-auto max-w-7xl w-full px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+            <div className="relative mx-auto max-w-7xl w-full px-4 pt-4 pb-20 sm:px-6 sm:pt-6 sm:pb-24 lg:px-8">
                 {/* Split-Screen Grid */}
                 <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
                     {/* Left column — copywriting */}
-                    <div className="flex flex-col items-start text-left">
+                    <div className="flex flex-col items-start text-left lg:-mt-28">
                         <HeroBadge />
                         <HeroHeading title={title} />
                         <p className="hero-animate-3 mt-6 max-w-lg text-lg leading-relaxed text-gray-500 sm:text-xl">
