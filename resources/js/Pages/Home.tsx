@@ -63,6 +63,7 @@ export default function Home({
                 subtitle={hero.subtitle}
                 ctaLabel={hero.ctaLabel}
                 ctaUrl={hero.ctaUrl}
+                imageUrl="/images/hero-poster.png"
             />
             <AboutPreview about={aboutContent} />
             <ServicesPreview />
