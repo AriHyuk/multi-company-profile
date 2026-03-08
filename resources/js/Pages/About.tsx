@@ -1,5 +1,14 @@
 import Seo from "@/Components/Seo";
 import PublicLayout from "@/Layouts/PublicLayout";
+import {
+    Target,
+    Rocket,
+    History,
+    Award,
+    Users,
+    Globe,
+    Quote,
+} from "lucide-react";
 
 interface AboutContent {
     id: number;
@@ -25,82 +34,155 @@ export default function About({ content }: Props) {
                 }
             />
 
-            <div className="py-24 bg-white sm:py-32">
-                <div className="px-6 lg:px-8 max-w-7xl mx-auto">
-                    {/* Header Section */}
-                    <div className="max-w-2xl mx-auto text-center">
-                        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                            Tentang Kami
-                        </h2>
-                        <p className="mt-6 text-lg leading-8 text-gray-600">
-                            {[
-                                content?.founded_year
-                                    ? `Didirikan pada tahun ${content.founded_year}. `
-                                    : "",
-                                content?.description ??
-                                    "Deskripsi perusahaan belum tersedia.",
-                            ].join("")}
+            <div className="relative overflow-hidden bg-white py-24 sm:py-32">
+                {/* Background Decorations */}
+                <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[1000px] w-[1000px] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:top-[-200px]">
+                    <svg
+                        viewBox="0 0 1024 1024"
+                        className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
+                        aria-hidden="true"
+                    >
+                        <circle
+                            cx="512"
+                            cy="512"
+                            r="512"
+                            fill="url(#brand-gradient)"
+                            fillOpacity="0.1"
+                        />
+                        <defs>
+                            <radialGradient id="brand-gradient">
+                                <stop stopColor="#00cccc" />
+                                <stop offset={1} stopColor="#003366" />
+                            </radialGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    {/* Hero Header */}
+                    <div className="mx-auto max-w-2xl text-center">
+                        <span className="inline-flex items-center rounded-full bg-brand-primary/10 px-4 py-1.5 text-sm font-medium text-brand-primary ring-1 ring-inset ring-brand-primary/20 mb-6">
+                            Since {content?.founded_year ?? "2010"}
+                        </span>
+                        <h1 className="text-4xl font-bold tracking-tight text-brand-primary sm:text-6xl gradient-text bg-gradient-to-r from-brand-primary to-brand-bridge bg-clip-text text-transparent">
+                            Digitalizing Innovation
+                        </h1>
+                        <p className="mt-8 text-lg leading-8 text-gray-600">
+                            {content?.description ??
+                                "Kami adalah mitra strategis untuk transformasi digital bisnis Anda."}
                         </p>
                     </div>
 
-                    {/* Vision & Mission */}
-                    <div className="mt-20 mx-auto max-w-2xl sm:mt-24 lg:mt-32 lg:max-w-none">
-                        <dl className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
-                            <div className="flex flex-col items-start p-8 rounded-2xl bg-gray-50 border border-gray-100 shadow-sm">
-                                <dt className="text-xl font-semibold leading-7 text-gray-900 flex items-center gap-x-3">
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
-                                        <svg
-                                            className="h-6 w-6 text-white"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                                            />
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                                            />
-                                        </svg>
-                                    </div>
+                    {/* Bento Grid Layout */}
+                    <div className="mt-16 grid grid-cols-1 gap-4 sm:mt-20 lg:grid-cols-3 lg:grid-rows-2 h-auto lg:h-[600px]">
+                        {/* Visi - Large Card */}
+                        <div className="relative flex flex-col group overflow-hidden rounded-3xl bg-brand-primary p-8 lg:row-span-2 shadow-xl ring-1 ring-white/10">
+                            <div className="relative z-10">
+                                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent/20 text-brand-accent transition-transform duration-500 group-hover:scale-110">
+                                    <Target className="h-6 w-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold text-white mb-4">
                                     Visi Kami
-                                </dt>
-                                <dd className="mt-6 text-base leading-7 text-gray-600">
-                                    {content?.vision ??
-                                        "Visi perusahaan belum tersedia."}
-                                </dd>
+                                </h3>
+                                <p className="text-lg leading-relaxed text-blue-100">
+                                    {content?.vision}
+                                </p>
                             </div>
+                            {/* Decorative element */}
+                            <div className="absolute -right-8 -bottom-8 opacity-10 transition-transform duration-700 group-hover:scale-125 group-hover:-rotate-12">
+                                <Target className="h-64 w-64 text-white" />
+                            </div>
+                        </div>
 
-                            <div className="flex flex-col items-start p-8 rounded-2xl bg-gray-50 border border-gray-100 shadow-sm">
-                                <dt className="text-xl font-semibold leading-7 text-gray-900 flex items-center gap-x-3">
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
-                                        <svg
-                                            className="h-6 w-6 text-white"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.45m0 0a15.01 15.01 0 0 1 2.448-2.45"
-                                            />
-                                        </svg>
+                        {/* Misi - Wide Card */}
+                        <div className="lg:col-span-2 relative flex flex-col group overflow-hidden rounded-3xl bg-slate-50 border border-slate-100 p-8 shadow-sm transition-all hover:shadow-md">
+                            <div className="relative z-10">
+                                <div className="flex items-center gap-x-3 mb-4">
+                                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand-accent text-white">
+                                        <Rocket className="h-5 w-5" />
                                     </div>
-                                    Misi Kami
-                                </dt>
-                                <dd className="mt-6 text-base leading-7 text-gray-600">
-                                    {content?.mission ??
-                                        "Misi perusahaan belum tersedia."}
-                                </dd>
+                                    <h3 className="text-xl font-bold text-brand-primary">
+                                        Misi Perusahaan
+                                    </h3>
+                                </div>
+                                <p className="text-gray-600 leading-relaxed max-w-2xl">
+                                    {content?.mission}
+                                </p>
                             </div>
-                        </dl>
+                            <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-[0.03]">
+                                <Rocket className="h-32 w-32 text-brand-primary" />
+                            </div>
+                        </div>
+
+                        {/* Stat 1 - Small Card */}
+                        <div className="relative flex flex-col items-center justify-center group overflow-hidden rounded-3xl bg-brand-accent/5 border border-brand-accent/20 p-8 transition-all hover:bg-brand-accent/10">
+                            <History className="h-8 w-8 text-brand-accent mb-3" />
+                            <div className="text-3xl font-bold text-brand-primary">
+                                {new Date().getFullYear() -
+                                    (content?.founded_year ?? 2024)}
+                                +
+                            </div>
+                            <div className="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                                Tahun Pengalaman
+                            </div>
+                        </div>
+
+                        {/* Stat 2 - Small Card */}
+                        <div className="relative flex flex-col items-center justify-center group overflow-hidden rounded-3xl bg-brand-bridge/5 border border-brand-bridge/20 p-8 transition-all hover:bg-brand-bridge/10">
+                            <Award className="h-8 w-8 text-brand-bridge mb-3" />
+                            <div className="text-3xl font-bold text-brand-primary">
+                                100%
+                            </div>
+                            <div className="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                                Kepuasan Klien
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Additional Core Values or Culture */}
+                    <div className="mt-24 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="flex gap-x-4">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-primary">
+                                <Users className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <h3 className="text-base font-semibold leading-7 text-gray-900">
+                                    Global Mindset
+                                </h3>
+                                <p className="mt-2 text-base leading-7 text-gray-600">
+                                    Berfikir secara global untuk menghadirkan
+                                    solusi berskala internasional.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex gap-x-4">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-primary">
+                                <Globe className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <h3 className="text-base font-semibold leading-7 text-gray-900">
+                                    Sustainable Solutions
+                                </h3>
+                                <p className="mt-2 text-base leading-7 text-gray-600">
+                                    Solusi teknologi yang tidak hanya canggih,
+                                    tapi juga berkelanjutan.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex gap-x-4">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-primary">
+                                <Quote className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <h3 className="text-base font-semibold leading-7 text-gray-900">
+                                    Integrity First
+                                </h3>
+                                <p className="mt-2 text-base leading-7 text-gray-600">
+                                    Kepercayaan adalah pondasi utama dalam
+                                    setiap kerjasama kami.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

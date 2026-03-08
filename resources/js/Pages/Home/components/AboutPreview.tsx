@@ -1,5 +1,6 @@
 import { Link } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
+import { Target, Rocket, ArrowRight } from "lucide-react";
 
 interface AboutProps {
     about: {
@@ -14,87 +15,93 @@ export default function AboutPreview({ about }: AboutProps) {
     if (!about || !about.description) return null;
 
     return (
-        <section className="bg-white py-20">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-                    {/* Text Content */}
-                    <div>
-                        <div className="mb-4">
-                            <span className="inline-flex items-center rounded-full bg-brand-primary/8 px-3 py-1 text-sm font-semibold text-brand-primary ring-1 ring-brand-primary/15">
+        <section className="relative overflow-hidden bg-white py-24 sm:py-32">
+            {/* Background Accent */}
+            <div className="absolute top-0 right-0 -z-10 h-72 w-72 translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-accent/10 blur-3xl opacity-50" />
+
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
+                    {/* Colon Kiri: Text Content */}
+                    <div className="relative z-10">
+                        <div className="mb-6">
+                            <span className="inline-flex items-center gap-2 rounded-full bg-brand-primary/10 px-4 py-1.5 text-sm font-semibold text-brand-primary ring-1 ring-inset ring-brand-primary/20 transition-all hover:bg-brand-primary/15">
+                                <span className="h-1.5 w-1.5 rounded-full bg-brand-accent animate-pulse" />
                                 Tentang Kami
                             </span>
                         </div>
-                        <h2 className="text-3xl font-bold tracking-tight text-brand-primary sm:text-4xl">
-                            Mengenal Lebih Dekat
+
+                        <h2 className="text-3xl font-bold tracking-tight text-brand-primary sm:text-5xl leading-tight">
+                            Membangun Masa Depan <br />
+                            <span className="text-brand-accent italic">
+                                Digital
+                            </span>{" "}
+                            Bersama Kami
                         </h2>
-                        <p className="mt-6 text-lg leading-relaxed text-gray-500 line-clamp-4">
+
+                        <p className="mt-8 text-lg leading-relaxed text-gray-600 line-clamp-4">
                             {about.description}
                         </p>
-                        <div className="mt-8">
+
+                        <div className="mt-10 flex items-center gap-x-6">
                             <Link href="/tentang-kami">
-                                <PrimaryButton>Selengkapnya</PrimaryButton>
+                                <PrimaryButton className="group flex items-center gap-2 px-8 py-4 text-base shadow-lg shadow-brand-primary/20 transition-all hover:translate-y-[-2px]">
+                                    Kenali Kami Lebih Jauh
+                                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                                </PrimaryButton>
                             </Link>
                         </div>
                     </div>
-                    {/* Visual Placeholder / Additional Info */}
-                    <div className="relative overflow-hidden rounded-3xl bg-brand-secondary p-8 shadow-inner ring-1 ring-gray-100 lg:p-12">
-                        <div className="relative z-10">
-                            {about.vision && (
-                                <div className="mb-8">
-                                    <h3 className="flex items-center gap-2 text-xl font-semibold text-brand-primary">
-                                        <svg
-                                            className="h-6 w-6 text-brand-accent"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            strokeWidth={2}
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                            />
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                                            />
-                                        </svg>
-                                        Visi
+
+                    {/* Kolom Kanan: Visual Bento Preview */}
+                    <div className="grid grid-cols-2 gap-4">
+                        {/* Vision Card */}
+                        {about.vision && (
+                            <div className="col-span-2 relative overflow-hidden rounded-3xl bg-brand-primary p-8 shadow-xl transition-all hover:scale-[1.02] duration-300">
+                                <div className="absolute top-0 right-0 p-4 opacity-10">
+                                    <Target className="h-24 w-24 text-white" />
+                                </div>
+                                <div className="relative z-10">
+                                    <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-accent/20 text-brand-accent">
+                                        <Target className="h-5 w-5" />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white mb-2">
+                                        Visi Kami
                                     </h3>
-                                    <p className="mt-3 leading-relaxed text-gray-500 line-clamp-3">
+                                    <p className="text-blue-100 text-sm leading-relaxed line-clamp-3">
                                         {about.vision}
                                     </p>
                                 </div>
-                            )}
-                            {about.mission && (
-                                <div>
-                                    <h3 className="flex items-center gap-2 text-xl font-semibold text-brand-primary">
-                                        <svg
-                                            className="h-6 w-6 text-brand-accent"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            strokeWidth={2}
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M13 10V3L4 14h7v7l9-11h-7z"
-                                            />
-                                        </svg>
-                                        Misi
-                                    </h3>
-                                    <p className="mt-3 leading-relaxed text-gray-500 line-clamp-3">
-                                        {about.mission}
-                                    </p>
-                                </div>
-                            )}
-                        </div>
+                            </div>
+                        )}
 
-                        {/* Decorative background meshes */}
-                        <div className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full bg-brand-accent/10 blur-3xl" />
-                        <div className="pointer-events-none absolute -bottom-12 -left-12 h-48 w-48 rounded-full bg-brand-primary/5 blur-3xl" />
+                        {/* Mission Card */}
+                        {about.mission && (
+                            <div className="col-span-2 sm:col-span-1 relative overflow-hidden rounded-3xl bg-slate-50 p-6 border border-slate-100 shadow-sm transition-all hover:shadow-md">
+                                <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-brand-accent text-white">
+                                    <Rocket className="h-4 w-4" />
+                                </div>
+                                <h3 className="text-lg font-bold text-brand-primary mb-1">
+                                    Misi
+                                </h3>
+                                <p className="text-gray-500 text-xs leading-relaxed line-clamp-3 italic">
+                                    "{about.mission}"
+                                </p>
+                            </div>
+                        )}
+
+                        {/* Experience Card (Static/Calculated) */}
+                        <div className="col-span-2 sm:col-span-1 relative overflow-hidden rounded-3xl bg-brand-accent/5 p-6 border border-brand-accent/20 flex flex-col items-center justify-center text-center">
+                            <div className="text-4xl font-bold text-brand-primary mb-1">
+                                {about.founded_year
+                                    ? new Date().getFullYear() -
+                                      about.founded_year
+                                    : "10"}
+                                +
+                            </div>
+                            <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">
+                                Tahun <br /> Berkarya
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
