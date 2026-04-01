@@ -10,6 +10,8 @@ class Service extends Model
         'title',
         'slug',
         'description',
+        'content',
+        'features',
         'icon',
         'price_estimate',
         'order',
@@ -19,5 +21,6 @@ class Service extends Model
     protected $casts = [
         'is_active' => 'boolean',
         'order'     => 'integer',
+        'features'  => 'array',
     ];
 }

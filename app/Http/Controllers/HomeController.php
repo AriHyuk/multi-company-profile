@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\AboutContent;
 use App\Models\TeamMember;
@@ -17,6 +18,7 @@ class HomeController extends Controller
     {
         $aboutContent = AboutContent::first();
         $teamPreview = TeamMember::where('is_active', true)->orderBy('order')->take(3)->get();
+        $servicesPreview = Service::where('is_active', true)->orderBy('order')->take(4)->get();
 
         return Inertia::render('Home', [
             'hero' => [
@@ -35,6 +37,7 @@ class HomeController extends Controller
             ],
             'aboutContent' => $aboutContent,
             'teamPreview' => $teamPreview,
+            'servicesPreview' => $servicesPreview,
         ]);
     }
 }

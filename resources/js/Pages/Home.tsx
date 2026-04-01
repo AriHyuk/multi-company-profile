@@ -18,6 +18,14 @@ interface TeamMember {
     bio: string | null;
 }
 
+interface ServicePreview {
+    id: number;
+    title: string;
+    description: string;
+    icon: string | null;
+    slug: string;
+}
+
 interface Props {
     hero: {
         title: string;
@@ -40,6 +48,7 @@ interface Props {
         founded_year: number | null;
     } | null;
     teamPreview: TeamMember[];
+    servicesPreview: ServicePreview[];
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -50,6 +59,7 @@ export default function Home({
     company,
     aboutContent,
     teamPreview,
+    servicesPreview,
 }: Props) {
     return (
         <PublicLayout>
@@ -66,7 +76,7 @@ export default function Home({
                 imageUrl="/images/hero-poster.png"
             />
             <AboutPreview about={aboutContent} />
-            <ServicesPreview />
+            <ServicesPreview services={servicesPreview} />
             <TeamPreview members={teamPreview} />
             <FeaturedProjects />
             <CtaBanner ctaUrl={hero.ctaUrl} />
