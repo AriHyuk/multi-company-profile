@@ -24,3 +24,6 @@ Homestead.yaml
 Thumbs.db
 .agent
 .agent/
+
+env.prod
+vendor.zip
