@@ -4,11 +4,12 @@ import { FormEvent } from "react";
 
 interface Service {
     id?: number;
-    name: string;
+    title: string;
+    slug: string;
+    description: string; // short
+    content: string; // long
     icon: string;
-    short_description: string;
-    description: string;
-    status: "active" | "inactive";
+    is_active: boolean;
 }
 
 interface Props {
@@ -18,11 +19,11 @@ interface Props {
 export default function Form({ service }: Props) {
     const isEdit = !!service;
     const { data, setData, post, put, processing, errors } = useForm({
-        name: service?.name || "",
+        name: service?.title || "",
         icon: service?.icon || "Activity",
-        short_description: service?.short_description || "",
-        description: service?.description || "",
-        status: service?.status || "active",
+        short_description: service?.description || "",
+        description: service?.content || "",
+        status: service?.is_active === false ? "inactive" : "active",
     });
 
     const submit = (e: FormEvent) => {

@@ -3,9 +3,9 @@ import CmsLayout from "@/Layouts/CmsLayout";
 
 interface Service {
     id: number;
-    name: string;
+    title: string;
     icon: string;
-    status: "active" | "inactive";
+    is_active: boolean;
 }
 
 interface Props {
@@ -60,7 +60,7 @@ export default function Index({ services }: Props) {
                                     className="hover:bg-gray-50/50 transition"
                                 >
                                     <td className="px-6 py-4 font-semibold text-gray-900">
-                                        {item.name}
+                                        {item.title}
                                     </td>
                                     <td className="px-6 py-4 text-gray-600 font-mono text-xs">
                                         {item.icon}
@@ -68,12 +68,12 @@ export default function Index({ services }: Props) {
                                     <td className="px-6 py-4">
                                         <span
                                             className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${
-                                                item.status === "active"
+                                                item.is_active
                                                     ? "bg-green-50 text-green-700 ring-green-600/20"
                                                     : "bg-red-50 text-red-700 ring-red-600/20"
                                             }`}
                                         >
-                                            {item.status === "active"
+                                            {item.is_active
                                                 ? "Aktif"
                                                 : "Nonaktif"}
                                         </span>

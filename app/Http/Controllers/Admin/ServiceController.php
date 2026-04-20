@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -24,7 +26,7 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'icon' => 'required|string|max:255',
             'short_description' => 'required|string|max:255',
@@ -32,11 +34,25 @@ class ServiceController extends Controller
             'status' => 'required|in:active,inactive',
         ]);
 
-        $data['slug'] = Str::slug($data['name']);
+        $data = [
+            'title'       => $validated['name'],
+            'slug'        => Str::slug($validated['name']),
+            'description' => $validated['short_description'],
+            'content'     => $validated['description'],
+            'icon'        => $validated['icon'],
+            'is_active'   => $validated['status'] === 'active',
+        ];
 
-        Service::create($data);
-
-        return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil ditambahkan!');
+        DB::beginTransaction();
+        try {
+            Service::create($data);
+            DB::commit();
+            return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Gagal simpan service: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan layanan. Silakan coba lagi.');
+        }
     }
 
     public function edit(Service $service)
@@ -48,7 +64,7 @@ class ServiceController extends Controller
 
     public function update(Request $request, Service $service)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'icon' => 'required|string|max:255',
             'short_description' => 'required|string|max:255',
@@ -56,16 +72,38 @@ class ServiceController extends Controller
             'status' => 'required|in:active,inactive',
         ]);
 
-        $data['slug'] = Str::slug($data['name']);
+        $data = [
+            'title'       => $validated['name'],
+            'slug'        => Str::slug($validated['name']),
+            'description' => $validated['short_description'],
+            'content'     => $validated['description'],
+            'icon'        => $validated['icon'],
+            'is_active'   => $validated['status'] === 'active',
+        ];
 
-        $service->update($data);
-
-        return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil diperbarui!');
+        DB::beginTransaction();
+        try {
+            $service->update($data);
+            DB::commit();
+            return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil diperbarui!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Gagal update service: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal memperbarui layanan. Silakan coba lagi.');
+        }
     }
 
     public function destroy(Service $service)
     {
-        $service->delete();
-        return redirect()->back()->with('success', 'Layanan berhasil dihapus!');
+        DB::beginTransaction();
+        try {
+            $service->delete();
+            DB::commit();
+            return redirect()->back()->with('success', 'Layanan berhasil dihapus!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Gagal hapus service: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus layanan.');
+        }
     }
 }
