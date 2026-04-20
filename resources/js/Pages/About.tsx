@@ -68,8 +68,10 @@ export default function About({ content, contact }: Props) {
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     {/* Hero Header */}
                     <div className="mx-auto max-w-2xl text-center">
-                        <span className="inline-flex items-center rounded-full bg-brand-primary/10 px-4 py-1.5 text-sm font-medium text-brand-primary ring-1 ring-inset ring-brand-primary/20 mb-6">
-                            Since {content?.founded_year ?? "2010"}
+                        <span className="inline-flex items-center rounded-full bg-brand-primary/10 px-4 py-1.5 text-sm font-bold text-brand-primary ring-1 ring-inset ring-brand-primary/20 mb-6 animate-pulse">
+                            {new Date().getFullYear() -
+                                (content?.founded_year ?? 2015)}{" "}
+                            Tahun Berkarya
                         </span>
                         <h1 className="text-4xl font-bold tracking-tight text-brand-primary sm:text-6xl gradient-text bg-gradient-to-r from-brand-primary to-brand-bridge bg-clip-text text-transparent">
                             Digitalizing Innovation
@@ -112,11 +114,25 @@ export default function About({ content, contact }: Props) {
                                         Misi Perusahaan
                                     </h3>
                                 </div>
-                                <p className="text-gray-600 leading-relaxed max-w-2xl">
-                                    {content?.mission}
-                                </p>
+                                <ul className="mt-6 space-y-4">
+                                    {content?.mission
+                                        ?.split("\n")
+                                        .map((point, index) => (
+                                            <li
+                                                key={index}
+                                                className="flex items-start gap-3 text-gray-600"
+                                            >
+                                                <div className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-accent/20 text-brand-accent">
+                                                    <div className="h-1.5 w-1.5 rounded-full bg-brand-accent" />
+                                                </div>
+                                                <span className="text-base leading-relaxed">
+                                                    {point}
+                                                </span>
+                                            </li>
+                                        ))}
+                                </ul>
                             </div>
-                            <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-[0.03]">
+                            <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-[0.05]">
                                 <Rocket className="h-32 w-32 text-brand-primary" />
                             </div>
                         </div>
@@ -125,12 +141,10 @@ export default function About({ content, contact }: Props) {
                         <div className="relative flex flex-col items-center justify-center group overflow-hidden rounded-3xl bg-brand-accent/5 border border-brand-accent/20 p-8 transition-all hover:bg-brand-accent/10">
                             <History className="h-8 w-8 text-brand-accent mb-3" />
                             <div className="text-3xl font-bold text-brand-primary">
-                                {new Date().getFullYear() -
-                                    (content?.founded_year ?? 2024)}
-                                +
+                                IT Support
                             </div>
                             <div className="text-sm font-medium text-gray-500 uppercase tracking-wider">
-                                Tahun Pengalaman
+                                Profesional & Cepat
                             </div>
                         </div>
 

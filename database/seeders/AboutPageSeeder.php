@@ -12,10 +12,13 @@ class AboutPageSeeder extends Seeder
      */
     public function run(): void
     {
+        \App\Models\AboutContent::truncate();
+        \App\Models\TeamMember::truncate();
+        
         \App\Models\AboutContent::create([
             'description' => 'Digikova adalah perusahaan yang bergerak di bidang layanan Teknologi Informasi dan Komunikasi (TIK) yang berfokus pada peningkatan literasi digital serta pengembangan solusi teknologi bagi masyarakat dan bisnis. Melalui kegiatan seminar, pelatihan, dan layanan IT Support, Digikova membantu berbagai kalangan, mulai dari pendidikan, perusahaan, hingga masyarakat umum, dalam memanfaatkan teknologi secara optimal. Dengan komitmen pada profesionalisme dan inovasi, Digikova hadir sebagai mitra terpercaya dalam mendukung transformasi digital.',
-            'vision' => 'Menjadi pusat inovasi dan katalisator pertumbuhan bisnis digital di Asia Tenggara.',
-            'mission' => 'Memberikan solusi teknologi berkelas dunia, membangun ekosistem yang berkelanjutan, dan memberdayakan talenta digital terbaik.',
+            'vision' => 'Menjadi perusahaan layanan Teknologi Informasi dan Komunikasi (TIK) yang terpercaya, inovatif, dan berperan aktif dalam meningkatkan kualitas sumber daya manusia melalui pemanfaatan teknologi digital.',
+            'mission' => "Memberikan layanan IT Support yang profesional, cepat, dan tepat guna.\nMeningkatkan literasi digital masyarakat melalui pelatihan, seminar, dan edukasi teknologi.\nMengembangkan solusi teknologi yang inovatif sesuai kebutuhan bisnis dan pendidikan.\nMembangun kemitraan yang kuat dengan berbagai sektor, baik pendidikan, pemerintahan, maupun swasta.\nMendukung transformasi digital yang berkelanjutan untuk meningkatkan efisiensi dan produktivitas.",
             'founded_year' => 2015,
             'logo' => null, // Placeholder logo bisa menggunakan asset lokal atau diset dari CMS nantinya
         ]);
