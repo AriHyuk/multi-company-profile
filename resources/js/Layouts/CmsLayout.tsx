@@ -1,5 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
-import { PropsWithChildren, ReactNode, useState } from "react";
+import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
+import { Toaster, toast } from "sonner";
 
 interface Props extends PropsWithChildren {
     header?: ReactNode;
@@ -176,7 +177,7 @@ const adminOnlyItems = [
 ];
 
 export default function CmsLayout({ header, children }: Props) {
-    const { auth } = usePage<{
+    const { auth, flash } = usePage<{
         auth: {
             user: {
                 id: number;
@@ -185,8 +186,23 @@ export default function CmsLayout({ header, children }: Props) {
                 role: "user" | "editor" | "admin";
             };
         };
+        flash: {
+            success: string | null;
+            error: string | null;
+        };
     }>().props;
     const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    useEffect(() => {
+        if (flash.success) {
+            toast.success(flash.success);
+        }
+        if (flash.error) {
+            toast.error(flash.error, {
+                duration: 5000,
+            });
+        }
+    }, [flash]);
 
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100 font-sans">
@@ -325,7 +341,10 @@ export default function CmsLayout({ header, children }: Props) {
                 </header>
 
                 {/* Page Content */}
-                <main className="flex-1 overflow-y-auto p-6">{children}</main>
+                <main className="flex-1 overflow-y-auto p-6">
+                    {children}
+                </main>
+                <Toaster position="top-right" richColors closeButton />
             </div>
         </div>
     );

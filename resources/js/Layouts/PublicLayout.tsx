@@ -19,6 +19,7 @@ import {
     Palette,
     TrendingUp,
 } from "lucide-react";
+import { Toaster, toast } from "sonner";
 
 interface SubItem {
     href: string;
@@ -62,6 +63,20 @@ export default function PublicLayout({ children }: PropsWithChildren) {
         window.addEventListener("scroll", onScroll, { passive: true });
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
+
+    const { props } = usePage();
+    const flash = props.flash as { success?: string; error?: string };
+
+    useEffect(() => {
+        if (flash.success) {
+            toast.success(flash.success);
+        }
+        if (flash.error) {
+            toast.error(flash.error, {
+                duration: 5000,
+            });
+        }
+    }, [flash]);
 
     const navLinks: NavLink[] = [
         { href: "/", label: "Beranda" },
@@ -427,6 +442,7 @@ export default function PublicLayout({ children }: PropsWithChildren) {
                     </div>
                 </div>
             </footer>
+            <Toaster position="top-center" richColors closeButton />
         </div>
     );
 }

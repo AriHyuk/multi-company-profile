@@ -39,6 +39,10 @@ class HandleInertiaRequests extends Middleware
                 'phone' => \App\Models\SiteSetting::get('contact_phone', '+62 (21) 1234-5678'),
                 'address' => \App\Models\SiteSetting::get('contact_address', 'Jl. Raya Kemang No. 123, Jakarta Selatan, 12730'),
             ],
+            'flash' => [
+                'success' => $request->session()->get('success'),
+                'error' => $request->session()->get('error'),
+            ],
         ];
     }
 }

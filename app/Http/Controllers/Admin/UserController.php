@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -32,14 +34,21 @@ class UserController extends Controller
             'role' => 'required|in:admin,editor',
         ]);
 
-        User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'role' => $data['role'],
-        ]);
-
-        return redirect()->route('admin.users.index')->with('success', 'User berhasil ditambahkan!');
+        DB::beginTransaction();
+        try {
+            User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'role' => $data['role'],
+            ]);
+            DB::commit();
+            return redirect()->route('admin.users.index')->with('success', 'User berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Gagal simpan user: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Gagal menambahkan user. Silakan coba lagi.');
+        }
     }
 
     public function edit(User $user)
@@ -68,9 +77,16 @@ class UserController extends Controller
             $updateData['password'] = Hash::make($data['password']);
         }
 
-        $user->update($updateData);
-
-        return redirect()->route('admin.users.index')->with('success', 'User berhasil diperbarui!');
+        DB::beginTransaction();
+        try {
+            $user->update($updateData);
+            DB::commit();
+            return redirect()->route('admin.users.index')->with('success', 'User berhasil diperbarui!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Gagal update user: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Gagal memperbarui user. Silakan coba lagi.');
+        }
     }
 
     public function destroy(User $user)
@@ -79,7 +95,15 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'Anda tidak bisa menghapus akun sendiri!');
         }
 
-        $user->delete();
-        return redirect()->back()->with('success', 'User berhasil dihapus!');
+        DB::beginTransaction();
+        try {
+            $user->delete();
+            DB::commit();
+            return redirect()->back()->with('success', 'User berhasil dihapus!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Gagal hapus user: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus user.');
+        }
     }
 }

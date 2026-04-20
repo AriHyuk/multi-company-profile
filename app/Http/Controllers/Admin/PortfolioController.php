@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -42,35 +44,49 @@ class PortfolioController extends Controller
         $data['slug'] = Str::slug($data['title']);
         
         $manager = new ImageManager(new Driver());
+        $uploadedFiles = [];
 
-        if ($request->hasFile('thumbnail')) {
-            $imageFile = $request->file('thumbnail');
-            $filename = uniqid() . '_thumb_' . time() . '.webp';
-            $path = 'portfolios/thumbnails/' . $filename;
-
-            $processedImage = $manager->read($imageFile)->toWebp(80);
-            Storage::disk('public')->put($path, $processedImage);
-
-            $data['thumbnail'] = $path;
-        }
-
-        $imagePaths = [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $imageFile) {
-                $filename = uniqid() . '_gallery_' . time() . '.webp';
-                $path = 'portfolios/gallery/' . $filename;
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('thumbnail')) {
+                $imageFile = $request->file('thumbnail');
+                $filename = uniqid() . '_thumb_' . time() . '.webp';
+                $path = 'portfolios/thumbnails/' . $filename;
 
                 $processedImage = $manager->read($imageFile)->toWebp(80);
                 Storage::disk('public')->put($path, $processedImage);
 
-                $imagePaths[] = $path;
+                $data['thumbnail'] = $path;
+                $uploadedFiles[] = $path;
             }
+
+            $imagePaths = [];
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $imageFile) {
+                    $filename = uniqid() . '_gallery_' . time() . '.webp';
+                    $path = 'portfolios/gallery/' . $filename;
+
+                    $processedImage = $manager->read($imageFile)->toWebp(80);
+                    Storage::disk('public')->put($path, $processedImage);
+
+                    $imagePaths[] = $path;
+                    $uploadedFiles[] = $path;
+                }
+            }
+            $data['images'] = $imagePaths;
+
+            Portfolio::create($data);
+
+            DB::commit();
+            return redirect()->route('admin.portfolios.index')->with('success', 'Project berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            foreach ($uploadedFiles as $file) {
+                Storage::disk('public')->delete($file);
+            }
+            Log::error('Gagal simpan portfolio: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan project. Silakan coba lagi.');
         }
-        $data['images'] = $imagePaths;
-
-        Portfolio::create($data);
-
-        return redirect()->route('admin.portfolios.index')->with('success', 'Project berhasil ditambahkan!');
     }
 
     public function edit(Portfolio $portfolio)
@@ -98,57 +114,85 @@ class PortfolioController extends Controller
         $data['slug'] = Str::slug($data['title']);
 
         $manager = new ImageManager(new Driver());
+        $uploadedFiles = [];
+        $oldFilesToDelete = [];
 
-        if ($request->hasFile('thumbnail')) {
-            if ($portfolio->thumbnail) {
-                Storage::disk('public')->delete($portfolio->thumbnail);
-            }
-            $imageFile = $request->file('thumbnail');
-            $filename = uniqid() . '_thumb_' . time() . '.webp';
-            $path = 'portfolios/thumbnails/' . $filename;
-
-            $processedImage = $manager->read($imageFile)->toWebp(80);
-            Storage::disk('public')->put($path, $processedImage);
-
-            $data['thumbnail'] = $path;
-        }
-
-        if ($request->hasFile('images')) {
-            // Untuk simplifikasi, kita timpa galeri lama. 
-            // Di Phase 2 bisa buat manajemen remove per image.
-            foreach ($portfolio->images ?? [] as $oldImage) {
-                Storage::disk('public')->delete($oldImage);
-            }
-            
-            $imagePaths = [];
-            foreach ($request->file('images') as $imageFile) {
-                $filename = uniqid() . '_gallery_' . time() . '.webp';
-                $path = 'portfolios/gallery/' . $filename;
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('thumbnail')) {
+                if ($portfolio->thumbnail) {
+                    $oldFilesToDelete[] = $portfolio->thumbnail;
+                }
+                $imageFile = $request->file('thumbnail');
+                $filename = uniqid() . '_thumb_' . time() . '.webp';
+                $path = 'portfolios/thumbnails/' . $filename;
 
                 $processedImage = $manager->read($imageFile)->toWebp(80);
                 Storage::disk('public')->put($path, $processedImage);
 
-                $imagePaths[] = $path;
+                $data['thumbnail'] = $path;
+                $uploadedFiles[] = $path;
             }
-            $data['images'] = $imagePaths;
+
+            if ($request->hasFile('images')) {
+                foreach ($portfolio->images ?? [] as $oldImage) {
+                    $oldFilesToDelete[] = $oldImage;
+                }
+                
+                $imagePaths = [];
+                foreach ($request->file('images') as $imageFile) {
+                    $filename = uniqid() . '_gallery_' . time() . '.webp';
+                    $path = 'portfolios/gallery/' . $filename;
+
+                    $processedImage = $manager->read($imageFile)->toWebp(80);
+                    Storage::disk('public')->put($path, $processedImage);
+
+                    $imagePaths[] = $path;
+                    $uploadedFiles[] = $path;
+                }
+                $data['images'] = $imagePaths;
+            }
+
+            $portfolio->update($data);
+
+            foreach ($oldFilesToDelete as $file) {
+                Storage::disk('public')->delete($file);
+            }
+
+            DB::commit();
+            return redirect()->route('admin.portfolios.index')->with('success', 'Project berhasil diperbarui!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            foreach ($uploadedFiles as $file) {
+                Storage::disk('public')->delete($file);
+            }
+            Log::error('Gagal update portfolio: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal memperbarui project. Silakan coba lagi.');
         }
-
-        $portfolio->update($data);
-
-        return redirect()->route('admin.portfolios.index')->with('success', 'Project berhasil diperbarui!');
     }
 
     public function destroy(Portfolio $portfolio)
     {
-        if ($portfolio->thumbnail) {
-            Storage::disk('public')->delete($portfolio->thumbnail);
-        }
-        foreach ($portfolio->images ?? [] as $image) {
-            Storage::disk('public')->delete($image);
-        }
-        
-        $portfolio->delete();
+        DB::beginTransaction();
+        try {
+            $thumbnail = $portfolio->thumbnail;
+            $images = $portfolio->images ?? [];
+            
+            $portfolio->delete();
 
-        return redirect()->back()->with('success', 'Project berhasil dihapus!');
+            if ($thumbnail) {
+                Storage::disk('public')->delete($thumbnail);
+            }
+            foreach ($images as $image) {
+                Storage::disk('public')->delete($image);
+            }
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Project berhasil dihapus!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Gagal hapus portfolio: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus project.');
+        }
     }
 }

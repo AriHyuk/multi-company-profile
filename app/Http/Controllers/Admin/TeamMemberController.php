@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\TeamMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Intervention\Image\ImageManager;
@@ -35,21 +37,32 @@ class TeamMemberController extends Controller
             'order' => 'nullable|integer',
         ]);
 
-        if ($request->hasFile('photo')) {
-            $manager = new ImageManager(new Driver());
-            $imageFile = $request->file('photo');
-            $filename = uniqid() . '_' . time() . '.webp';
-            $path = 'team-members/' . $filename;
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('photo')) {
+                $manager = new ImageManager(new Driver());
+                $imageFile = $request->file('photo');
+                $filename = uniqid() . '_' . time() . '.webp';
+                $path = 'team-members/' . $filename;
 
-            $processedImage = $manager->read($imageFile)->toWebp(80);
-            Storage::disk('public')->put($path, $processedImage);
+                $processedImage = $manager->read($imageFile)->toWebp(80);
+                Storage::disk('public')->put($path, $processedImage);
 
-            $data['photo'] = $path;
+                $data['photo'] = $path;
+            }
+
+            TeamMember::create($data);
+            
+            DB::commit();
+            return redirect()->route('admin.team-members.index')->with('success', 'Anggota tim berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            if (isset($path)) {
+                Storage::disk('public')->delete($path);
+            }
+            Log::error('Gagal simpan team member: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Gagal menambahkan anggota tim. Silakan coba lagi.');
         }
-
-        TeamMember::create($data);
-
-        return redirect()->route('admin.team-members.index')->with('success', 'Anggota tim berhasil ditambahkan!');
     }
 
     public function edit(TeamMember $teamMember)
@@ -70,33 +83,57 @@ class TeamMemberController extends Controller
             'order' => 'nullable|integer',
         ]);
 
-        if ($request->hasFile('photo')) {
-            if ($teamMember->photo) {
-                Storage::disk('public')->delete($teamMember->photo);
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('photo')) {
+                $oldPhoto = $teamMember->photo;
+                
+                $manager = new ImageManager(new Driver());
+                $imageFile = $request->file('photo');
+                $filename = uniqid() . '_' . time() . '.webp';
+                $path = 'team-members/' . $filename;
+
+                $processedImage = $manager->read($imageFile)->toWebp(80);
+                Storage::disk('public')->put($path, $processedImage);
+
+                $data['photo'] = $path;
             }
-            $manager = new ImageManager(new Driver());
-            $imageFile = $request->file('photo');
-            $filename = uniqid() . '_' . time() . '.webp';
-            $path = 'team-members/' . $filename;
 
-            $processedImage = $manager->read($imageFile)->toWebp(80);
-            Storage::disk('public')->put($path, $processedImage);
+            $teamMember->update($data);
 
-            $data['photo'] = $path;
+            if (isset($oldPhoto) && $oldPhoto) {
+                Storage::disk('public')->delete($oldPhoto);
+            }
+
+            DB::commit();
+            return redirect()->route('admin.team-members.index')->with('success', 'Data anggota tim berhasil diperbarui!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            if (isset($path)) {
+                Storage::disk('public')->delete($path);
+            }
+            Log::error('Gagal update team member: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Gagal memperbarui data anggota tim. Silakan coba lagi.');
         }
-
-        $teamMember->update($data);
-
-        return redirect()->route('admin.team-members.index')->with('success', 'Data anggota tim berhasil diperbarui!');
     }
 
     public function destroy(TeamMember $teamMember)
     {
-        if ($teamMember->photo) {
-            Storage::disk('public')->delete($teamMember->photo);
-        }
-        $teamMember->delete();
+        DB::beginTransaction();
+        try {
+            $photo = $teamMember->photo;
+            $teamMember->delete();
 
-        return redirect()->back()->with('success', 'Anggota tim berhasil dihapus!');
+            if ($photo) {
+                Storage::disk('public')->delete($photo);
+            }
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Anggota tim berhasil dihapus!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Gagal hapus team member: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus anggota tim.');
+        }
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -43,21 +45,32 @@ class ArticleController extends Controller
             $data['published_at'] = now();
         }
 
-        if ($request->hasFile('thumbnail')) {
-            $manager = new ImageManager(new Driver());
-            $imageFile = $request->file('thumbnail');
-            $filename = uniqid() . '_' . time() . '.webp';
-            $path = 'articles/thumbnails/' . $filename;
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('thumbnail')) {
+                $manager = new ImageManager(new Driver());
+                $imageFile = $request->file('thumbnail');
+                $filename = uniqid() . '_' . time() . '.webp';
+                $path = 'articles/thumbnails/' . $filename;
 
-            $processedImage = $manager->read($imageFile)->toWebp(80);
-            Storage::disk('public')->put($path, $processedImage);
+                $processedImage = $manager->read($imageFile)->toWebp(80);
+                Storage::disk('public')->put($path, $processedImage);
 
-            $data['thumbnail'] = $path;
+                $data['thumbnail'] = $path;
+            }
+
+            Article::create($data);
+
+            DB::commit();
+            return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil diterbitkan!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            if (isset($path)) {
+                Storage::disk('public')->delete($path);
+            }
+            Log::error('Gagal simpan artikel: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menerbitkan artikel. Silakan coba lagi.');
         }
-
-        Article::create($data);
-
-        return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil diterbitkan!');
     }
 
     public function edit(Article $article)
@@ -84,33 +97,57 @@ class ArticleController extends Controller
             $data['published_at'] = now();
         }
 
-        if ($request->hasFile('thumbnail')) {
-            if ($article->thumbnail) {
-                Storage::disk('public')->delete($article->thumbnail);
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('thumbnail')) {
+                $oldThumbnail = $article->thumbnail;
+                
+                $manager = new ImageManager(new Driver());
+                $imageFile = $request->file('thumbnail');
+                $filename = uniqid() . '_' . time() . '.webp';
+                $path = 'articles/thumbnails/' . $filename;
+
+                $processedImage = $manager->read($imageFile)->toWebp(80);
+                Storage::disk('public')->put($path, $processedImage);
+
+                $data['thumbnail'] = $path;
             }
-            $manager = new ImageManager(new Driver());
-            $imageFile = $request->file('thumbnail');
-            $filename = uniqid() . '_' . time() . '.webp';
-            $path = 'articles/thumbnails/' . $filename;
 
-            $processedImage = $manager->read($imageFile)->toWebp(80);
-            Storage::disk('public')->put($path, $processedImage);
+            $article->update($data);
 
-            $data['thumbnail'] = $path;
+            if (isset($oldThumbnail) && $oldThumbnail) {
+                Storage::disk('public')->delete($oldThumbnail);
+            }
+
+            DB::commit();
+            return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil diperbarui!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            if (isset($path)) {
+                Storage::disk('public')->delete($path);
+            }
+            Log::error('Gagal update artikel: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal memperbarui artikel. Silakan coba lagi.');
         }
-
-        $article->update($data);
-
-        return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil diperbarui!');
     }
 
     public function destroy(Article $article)
     {
-        if ($article->thumbnail) {
-            Storage::disk('public')->delete($article->thumbnail);
-        }
-        $article->delete();
+        DB::beginTransaction();
+        try {
+            $thumbnail = $article->thumbnail;
+            $article->delete();
 
-        return redirect()->back()->with('success', 'Artikel berhasil dihapus!');
+            if ($thumbnail) {
+                Storage::disk('public')->delete($thumbnail);
+            }
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Artikel berhasil dihapus!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Gagal hapus artikel: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus artikel.');
+        }
     }
 }
