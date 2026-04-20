@@ -1,6 +1,7 @@
 import Seo from "@/Components/Seo";
 import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
+import ContactSection from "@/Components/Sections/ContactSection";
 
 interface Portfolio {
     id: number;
@@ -16,9 +17,14 @@ interface Portfolio {
 
 interface Props {
     portfolio: Portfolio;
+    contact: {
+        email: string;
+        phone: string;
+        address: string;
+    };
 }
 
-export default function PortfolioShow({ portfolio }: Props) {
+export default function PortfolioShow({ portfolio, contact }: Props) {
     const pageTitle = `${portfolio.title} — Portofolio`;
     const metaDescription = portfolio.description?.slice(0, 160);
 
@@ -156,32 +162,7 @@ export default function PortfolioShow({ portfolio }: Props) {
                 </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="bg-slate-50 py-20 border-t border-slate-100">
-                <div className="mx-auto max-w-4xl px-6 text-center">
-                    <h2 className="text-3xl font-bold text-slate-900">
-                        Tertarik membangun sesuatu yang serupa?
-                    </h2>
-                    <p className="mt-4 text-lg text-slate-600">
-                        Kami siap membantu mewujudkan visi digital Anda dengan
-                        teknologi terkini.
-                    </p>
-                    <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-                        <Link
-                            href="/kontak"
-                            className="inline-flex h-12 items-center justify-center rounded-full bg-blue-600 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-blue-700 hover:shadow-lg active:scale-95"
-                        >
-                            Mulai Konsultasi
-                        </Link>
-                        <Link
-                            href="/portofolio"
-                            className="inline-flex h-12 items-center justify-center rounded-full border border-slate-300 bg-white px-8 py-3 text-base font-semibold text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-400 active:scale-95"
-                        >
-                            Lihat Proyek Lainnya
-                        </Link>
-                    </div>
-                </div>
-            </section>
+            <ContactSection contact={contact} />
         </PublicLayout>
     );
 }

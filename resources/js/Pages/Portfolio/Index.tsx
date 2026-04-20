@@ -1,6 +1,7 @@
 import Seo from "@/Components/Seo";
 import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
+import ContactSection from "@/Components/Sections/ContactSection";
 
 interface Portfolio {
     id: number;
@@ -15,9 +16,14 @@ interface Portfolio {
 
 interface Props {
     portfolios: Portfolio[];
+    contact: {
+        email: string;
+        phone: string;
+        address: string;
+    };
 }
 
-export default function PortfolioIndex({ portfolios }: Props) {
+export default function PortfolioIndex({ portfolios, contact }: Props) {
     return (
         <PublicLayout>
             <Seo
@@ -105,26 +111,7 @@ export default function PortfolioIndex({ portfolios }: Props) {
                 </div>
             </section>
 
-            {/* CTA */}
-            <section className="bg-white py-20 border-t border-slate-100">
-                <div className="mx-auto max-w-4xl px-6 text-center">
-                    <h2 className="text-3xl font-bold text-slate-900">
-                        Punya proyek impian?
-                    </h2>
-                    <p className="mt-4 text-lg text-slate-600">
-                        Mari wujudkan bersama tim ahli kami. Kami siap
-                        mendengarkan ide-ide hebat Anda.
-                    </p>
-                    <div className="mt-10">
-                        <Link
-                            href="/kontak"
-                            className="inline-flex h-12 items-center justify-center rounded-full bg-blue-600 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-blue-700 hover:shadow-lg active:scale-95"
-                        >
-                            Hubungi Kami
-                        </Link>
-                    </div>
-                </div>
-            </section>
+            <ContactSection contact={contact} />
         </PublicLayout>
     );
 }

@@ -19,6 +19,11 @@ class TeamController extends Controller
 
         return Inertia::render('Team/Index', [
             'team' => $team,
+            'contact' => [
+                'email'   => \App\Models\SiteSetting::get('contact_email', 'contact@multi-company.co.id'),
+                'phone'   => \App\Models\SiteSetting::get('contact_phone', '+62 (21) 1234-5678'),
+                'address' => \App\Models\SiteSetting::get('contact_address', 'Jl. Raya Kemang No. 123, Jakarta Selatan, 12730'),
+            ],
         ]);
     }
 }

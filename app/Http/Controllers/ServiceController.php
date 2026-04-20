@@ -16,6 +16,11 @@ class ServiceController extends Controller
 
         return Inertia::render('Services/Index', [
             'services' => $services,
+            'contact' => [
+                'email'   => \App\Models\SiteSetting::get('contact_email', 'contact@multi-company.co.id'),
+                'phone'   => \App\Models\SiteSetting::get('contact_phone', '+62 (21) 1234-5678'),
+                'address' => \App\Models\SiteSetting::get('contact_address', 'Jl. Raya Kemang No. 123, Jakarta Selatan, 12730'),
+            ],
         ]);
     }
 
@@ -27,6 +32,11 @@ class ServiceController extends Controller
 
         return Inertia::render('Services/Show', [
             'service' => $service,
+            'contact' => [
+                'email'   => \App\Models\SiteSetting::get('contact_email', 'contact@multi-company.co.id'),
+                'phone'   => \App\Models\SiteSetting::get('contact_phone', '+62 (21) 1234-5678'),
+                'address' => \App\Models\SiteSetting::get('contact_address', 'Jl. Raya Kemang No. 123, Jakarta Selatan, 12730'),
+            ],
         ]);
     }
 }

@@ -3,7 +3,15 @@ import { useForm } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 import { FormEvent } from "react";
 
-export default function Contact() {
+interface Props {
+    contact: {
+        email: string;
+        phone: string;
+        address: string;
+    };
+}
+
+export default function Contact({ contact }: Props) {
     const { data, setData, post, processing, errors, reset, wasSuccessful } =
         useForm({
             name: "",
@@ -76,7 +84,7 @@ export default function Contact() {
                                             />
                                         </svg>
                                     </dt>
-                                    <dd>+62 (21) 1234-5678</dd>
+                                    <dd>{contact.phone}</dd>
                                 </div>
                                 <div className="flex gap-x-4">
                                     <dt className="flex-none">
@@ -98,10 +106,10 @@ export default function Contact() {
                                     </dt>
                                     <dd>
                                         <a
-                                            className="hover:text-blue-600"
-                                            href="mailto:contact@multi-company.co.id"
+                                            className="hover:text-brand-primary"
+                                            href={`mailto:${contact.email}`}
                                         >
-                                            contact@multi-company.co.id
+                                            {contact.email}
                                         </a>
                                     </dd>
                                 </div>
@@ -129,8 +137,7 @@ export default function Contact() {
                                         </svg>
                                     </dt>
                                     <dd>
-                                        Jl. Raya Kemang No. 123, Jakarta
-                                        Selatan, 12730
+                                        {contact.address}
                                     </dd>
                                 </div>
                             </dl>
@@ -175,7 +182,7 @@ export default function Contact() {
                                                         e.target.value,
                                                     )
                                                 }
-                                                className={`block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ${errors.name ? "ring-red-300 focus:ring-red-600" : "ring-gray-300 focus:ring-blue-600"} placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:ring-2 focus:ring-inset`}
+                                                className={`block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ${errors.name ? "ring-red-300 focus:ring-red-600" : "ring-gray-300 focus:ring-brand-primary"} placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:ring-2 focus:ring-inset`}
                                             />
                                             {errors.name && (
                                                 <p className="mt-1 text-xs text-red-600">
@@ -202,7 +209,7 @@ export default function Contact() {
                                                         e.target.value,
                                                     )
                                                 }
-                                                className={`block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ${errors.email ? "ring-red-300 focus:ring-red-600" : "ring-gray-300 focus:ring-blue-600"} placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:ring-2 focus:ring-inset`}
+                                                className={`block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ${errors.email ? "ring-red-300 focus:ring-red-600" : "ring-gray-300 focus:ring-brand-primary"} placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:ring-2 focus:ring-inset`}
                                             />
                                             {errors.email && (
                                                 <p className="mt-1 text-xs text-red-600">
@@ -229,7 +236,7 @@ export default function Contact() {
                                                         e.target.value,
                                                     )
                                                 }
-                                                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-primary sm:text-sm sm:leading-6"
                                             />
                                         </div>
                                     </div>
@@ -251,7 +258,7 @@ export default function Contact() {
                                                         e.target.value,
                                                     )
                                                 }
-                                                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-primary sm:text-sm sm:leading-6"
                                             />
                                         </div>
                                     </div>
@@ -273,7 +280,7 @@ export default function Contact() {
                                                         e.target.value,
                                                     )
                                                 }
-                                                className={`block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ${errors.message ? "ring-red-300 focus:ring-red-600" : "ring-gray-300 focus:ring-blue-600"} placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:ring-2 focus:ring-inset`}
+                                                className={`block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ${errors.message ? "ring-red-300 focus:ring-red-600" : "ring-gray-300 focus:ring-brand-primary"} placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:ring-2 focus:ring-inset`}
                                             ></textarea>
                                             {errors.message && (
                                                 <p className="mt-1 text-xs text-red-600">
@@ -287,7 +294,7 @@ export default function Contact() {
                                     <button
                                         type="submit"
                                         disabled={processing}
-                                        className="block w-full rounded-xl bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="block w-full rounded-xl bg-brand-primary px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-brand-bridge focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         {processing
                                             ? "Mengirim..."

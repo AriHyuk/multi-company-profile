@@ -17,17 +17,17 @@ class SiteSettingSeeder extends Seeder
             'hero_cta_url'     => '/kontak',
 
             // Tagline & Branding
-            'company_name'     => 'MultiCo Profiles',
+            'company_name'     => 'DIGIKOVA',
             'tagline'          => 'Your Digital Growth Partner',
 
             // SEO Global
-            'meta_description' => 'MultiCo Profiles — Agency digital full-service: web development, UI/UX, dan strategi digital untuk bisnis yang ingin bertumbuh.',
+            'meta_description' => 'DIGIKOVA — Agency digital full-service: web development, UI/UX, dan strategi digital untuk bisnis yang ingin bertumbuh.',
             'og_image'         => '/images/og-default.jpg',
 
             // Kontak
-            'contact_email'    => 'hello@multicompany.id',
-            'contact_phone'    => '+62 812-3456-7890',
-            'contact_address'  => 'Jl. Contoh No. 1, Jakarta Selatan, DKI Jakarta',
+            'contact_email'    => 'helpdesk@digikova.com',
+            'contact_phone'    => '089509713121',
+            'contact_address'  => 'jl.cipedak, srengseng sawah, jagakarsa, jakarta selatan 12640',
             'contact_maps_url' => 'https://maps.google.com',
 
             // Social Media

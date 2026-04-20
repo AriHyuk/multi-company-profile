@@ -1,5 +1,6 @@
 import PublicLayout from "@/Layouts/PublicLayout";
 import Seo from "@/Components/Seo";
+import ContactSection from "@/Components/Sections/ContactSection";
 
 interface TeamMember {
     id: number;
@@ -9,7 +10,16 @@ interface TeamMember {
     bio: string | null;
 }
 
-export default function Index({ team }: { team: TeamMember[] }) {
+interface Props {
+    team: TeamMember[];
+    contact: {
+        email: string;
+        phone: string;
+        address: string;
+    };
+}
+
+export default function Index({ team, contact }: Props) {
     return (
         <PublicLayout>
             <Seo
@@ -95,6 +105,8 @@ export default function Index({ team }: { team: TeamMember[] }) {
                     )}
                 </div>
             </section>
+
+            <ContactSection contact={contact} />
         </PublicLayout>
     );
 }

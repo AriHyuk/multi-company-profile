@@ -16,6 +16,11 @@ class PortfolioController extends Controller
 
         return Inertia::render('Portfolio/Index', [
             'portfolios' => $portfolios,
+            'contact' => [
+                'email' => env('CONTACT_EMAIL', 'contact@multi-company.co.id'),
+                'phone' => env('CONTACT_PHONE', '+62 (21) 1234-5678'),
+                'address' => env('CONTACT_ADDRESS', 'Jl. Raya Kemang No. 123, Jakarta Selatan, 12730'),
+            ],
         ]);
     }
 
@@ -27,6 +32,11 @@ class PortfolioController extends Controller
 
         return Inertia::render('Portfolio/Show', [
             'portfolio' => $portfolio,
+            'contact' => [
+                'email' => env('CONTACT_EMAIL', 'contact@multi-company.co.id'),
+                'phone' => env('CONTACT_PHONE', '+62 (21) 1234-5678'),
+                'address' => env('CONTACT_ADDRESS', 'Jl. Raya Kemang No. 123, Jakarta Selatan, 12730'),
+            ],
         ]);
     }
 }

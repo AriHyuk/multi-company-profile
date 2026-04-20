@@ -1,6 +1,7 @@
 import Seo from "@/Components/Seo";
 import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
+import ContactSection from "@/Components/Sections/ContactSection";
 
 interface Article {
     id: number;
@@ -19,9 +20,14 @@ interface Article {
 
 interface Props {
     article: Article;
+    contact: {
+        email: string;
+        phone: string;
+        address: string;
+    };
 }
 
-export default function ArticleShow({ article }: Props) {
+export default function ArticleShow({ article, contact }: Props) {
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString("id-ID", {
             year: "numeric",
@@ -142,26 +148,7 @@ export default function ArticleShow({ article }: Props) {
                 </div>
             </article>
 
-            {/* CTA Section */}
-            <section className="bg-slate-50 py-20 border-t border-slate-100">
-                <div className="mx-auto max-w-4xl px-6 text-center">
-                    <h2 className="text-3xl font-bold text-slate-900">
-                        Tertarik bekerja dengan kami?
-                    </h2>
-                    <p className="mt-4 text-lg text-slate-600">
-                        Mari wujudkan solusi digital terbaik untuk bisnis Anda
-                        bersama tim profesional kami.
-                    </p>
-                    <div className="mt-10">
-                        <Link
-                            href="/kontak"
-                            className="inline-flex h-12 items-center justify-center rounded-full bg-blue-600 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-blue-700 hover:shadow-lg active:scale-95"
-                        >
-                            Mulai Konsultasi Gratis
-                        </Link>
-                    </div>
-                </div>
-            </section>
+            <ContactSection contact={contact} />
         </PublicLayout>
     );
 }

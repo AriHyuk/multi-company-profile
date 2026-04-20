@@ -1,6 +1,7 @@
 import Seo from "@/Components/Seo";
 import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
+import ContactSection from "@/Components/Sections/ContactSection";
 
 interface Article {
     id: number;
@@ -27,9 +28,14 @@ interface Props {
         data: Article[];
         links: PaginationLink[];
     };
+    contact: {
+        email: string;
+        phone: string;
+        address: string;
+    };
 }
 
-export default function ArticleIndex({ articles }: Props) {
+export default function ArticleIndex({ articles, contact }: Props) {
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString("id-ID", {
             year: "numeric",
@@ -182,6 +188,8 @@ export default function ArticleIndex({ articles }: Props) {
                     )}
                 </div>
             </section>
+
+            <ContactSection contact={contact} />
         </PublicLayout>
     );
 }

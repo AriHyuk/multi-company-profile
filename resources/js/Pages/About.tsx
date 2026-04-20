@@ -10,6 +10,8 @@ import {
     Quote,
 } from "lucide-react";
 
+import ContactSection from "@/Components/Sections/ContactSection";
+
 interface AboutContent {
     id: number;
     description: string;
@@ -21,9 +23,14 @@ interface AboutContent {
 
 interface Props {
     content: AboutContent;
+    contact: {
+        email: string;
+        phone: string;
+        address: string;
+    };
 }
 
-export default function About({ content }: Props) {
+export default function About({ content, contact }: Props) {
     return (
         <PublicLayout>
             <Seo
@@ -186,6 +193,8 @@ export default function About({ content }: Props) {
                     </div>
                 </div>
             </div>
+
+            <ContactSection contact={contact} />
         </PublicLayout>
     );
 }

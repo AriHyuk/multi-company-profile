@@ -2,6 +2,7 @@ import Seo from "@/Components/Seo";
 import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 import * as LucideIcons from "lucide-react";
+import ContactSection from "@/Components/Sections/ContactSection";
 
 interface Service {
     id: number;
@@ -18,6 +19,11 @@ interface Service {
 
 interface Props {
     service: Service;
+    contact: {
+        email: string;
+        phone: string;
+        address: string;
+    };
 }
 
 const DynamicIcon = ({ name }: { name: string }) => {
@@ -25,7 +31,7 @@ const DynamicIcon = ({ name }: { name: string }) => {
     return <IconComponent className="h-16 w-16 text-blue-400" />;
 };
 
-export default function ServicesShow({ service }: Props) {
+export default function ServicesShow({ service, contact }: Props) {
     const pageTitle = service.title;
     const metaDescription = service.description.slice(0, 160);
     const isLucideIcon = service.icon && /^[A-Z][a-zA-Z]+$/.test(service.icon);
@@ -153,6 +159,8 @@ export default function ServicesShow({ service }: Props) {
                     </div>
                 </div>
             </section>
+
+            <ContactSection contact={contact} />
         </PublicLayout>
     );
 }

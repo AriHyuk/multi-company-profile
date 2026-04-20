@@ -15,6 +15,11 @@ class ArticleController extends Controller
 
         return \Inertia\Inertia::render('Article/Index', [
             'articles' => $articles,
+            'contact' => [
+                'email' => env('CONTACT_EMAIL', 'contact@multi-company.co.id'),
+                'phone' => env('CONTACT_PHONE', '+62 (21) 1234-5678'),
+                'address' => env('CONTACT_ADDRESS', 'Jl. Raya Kemang No. 123, Jakarta Selatan, 12730'),
+            ],
         ]);
     }
 
@@ -27,6 +32,11 @@ class ArticleController extends Controller
 
         return \Inertia\Inertia::render('Article/Show', [
             'article' => $article,
+            'contact' => [
+                'email' => env('CONTACT_EMAIL', 'contact@multi-company.co.id'),
+                'phone' => env('CONTACT_PHONE', '+62 (21) 1234-5678'),
+                'address' => env('CONTACT_ADDRESS', 'Jl. Raya Kemang No. 123, Jakarta Selatan, 12730'),
+            ],
         ]);
     }
 }

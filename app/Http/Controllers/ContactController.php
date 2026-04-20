@@ -8,7 +8,13 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return inertia('Contact/Index');
+        return inertia('Contact/Index', [
+            'contact' => [
+                'email'   => \App\Models\SiteSetting::get('contact_email', ''),
+                'phone'   => \App\Models\SiteSetting::get('contact_phone', ''),
+                'address' => \App\Models\SiteSetting::get('contact_address', ''),
+            ],
+        ]);
     }
 
     public function store(Request $request)

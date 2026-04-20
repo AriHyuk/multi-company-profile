@@ -49,6 +49,11 @@ interface Props {
     } | null;
     teamPreview: TeamMember[];
     servicesPreview: ServicePreview[];
+    contact: {
+        email: string;
+        phone: string;
+        address: string;
+    };
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -60,6 +65,7 @@ export default function Home({
     aboutContent,
     teamPreview,
     servicesPreview,
+    contact,
 }: Props) {
     return (
         <PublicLayout>
@@ -80,7 +86,7 @@ export default function Home({
             <TeamPreview members={teamPreview} />
             <FeaturedProjects />
             <CtaBanner ctaUrl={hero.ctaUrl} />
-            <ContactSection />
+            <ContactSection contact={contact} />
         </PublicLayout>
     );
 }

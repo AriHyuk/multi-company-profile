@@ -35,6 +35,11 @@ class HomeController extends Controller
                 'name'    => SiteSetting::get('company_name', 'Company'),
                 'tagline' => SiteSetting::get('tagline', ''),
             ],
+            'contact' => [
+                'email'   => SiteSetting::get('contact_email', ''),
+                'phone'   => SiteSetting::get('contact_phone', ''),
+                'address' => SiteSetting::get('contact_address', ''),
+            ],
             'aboutContent' => $aboutContent,
             'teamPreview' => $teamPreview,
             'servicesPreview' => $servicesPreview,
