@@ -66,7 +66,7 @@ export default function ArticleIndex({ articles, contact }: Props) {
             </section>
 
             {/* Articles Grid */}
-            <section className="py-20 bg-white">
+            <section className="py-20 bg-white dark:bg-midnight-bg">
                 <div className="mx-auto max-w-6xl px-6">
                     {articles.data.length === 0 ? (
                         <div className="py-20 text-center">
@@ -80,7 +80,7 @@ export default function ArticleIndex({ articles, contact }: Props) {
                                 {articles.data.map((article) => (
                                     <article
                                         key={article.id}
-                                        className="group flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1"
+                                        className="group flex flex-col overflow-hidden rounded-2xl border border-slate-100 dark:border-white/5 bg-white dark:bg-midnight-surface transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-blue-500/5 hover:-translate-y-1 dark:ring-1 dark:ring-white/5 dark:hover:ring-white/10"
                                     >
                                         <Link
                                             href={`/artikel/${article.slug}`}
@@ -102,10 +102,10 @@ export default function ArticleIndex({ articles, contact }: Props) {
                                             </div>
                                         </Link>
 
-                                        <div className="flex flex-1 flex-col p-6">
-                                            <div className="mb-3 flex items-center justify-between text-xs font-medium text-slate-500">
+                                         <div className="flex flex-1 flex-col p-6">
+                                            <div className="mb-3 flex items-center justify-between text-xs font-medium text-slate-500 dark:text-gray-400">
                                                 <div className="flex items-center gap-2">
-                                                    <div className="h-6 w-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] text-slate-600 font-bold uppercase">
+                                                    <div className="h-6 w-6 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center text-[10px] text-slate-600 dark:text-gray-300 font-bold uppercase">
                                                         {article.author.name.charAt(
                                                             0,
                                                         )}
@@ -121,7 +121,7 @@ export default function ArticleIndex({ articles, contact }: Props) {
                                                 </span>
                                             </div>
 
-                                            <h2 className="text-xl font-bold leading-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+                                            <h2 className="text-xl font-bold leading-tight text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">
                                                 <Link
                                                     href={`/artikel/${article.slug}`}
                                                 >
@@ -129,7 +129,7 @@ export default function ArticleIndex({ articles, contact }: Props) {
                                                 </Link>
                                             </h2>
 
-                                            <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-slate-600">
+                                            <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-slate-600 dark:text-gray-400">
                                                 {article.excerpt}
                                             </p>
 
@@ -175,7 +175,7 @@ export default function ArticleIndex({ articles, contact }: Props) {
                                                     ${
                                                         link.active
                                                             ? "bg-blue-600 text-white"
-                                                            : "bg-white text-slate-700 hover:bg-slate-50 border border-slate-200"
+                                                            : "bg-white dark:bg-white/5 text-slate-700 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10"
                                                     }
                                                     ${!link.url ? "opacity-50 cursor-not-allowed" : ""}
                                                 `}

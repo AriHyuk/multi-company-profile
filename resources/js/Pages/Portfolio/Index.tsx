@@ -45,7 +45,7 @@ export default function PortfolioIndex({ portfolios, contact }: Props) {
             </section>
 
             {/* Portfolio Grid */}
-            <section className="py-20 bg-slate-50">
+            <section className="py-20 bg-slate-50 dark:bg-midnight-bg">
                 <div className="mx-auto max-w-6xl px-6">
                     {portfolios.length === 0 ? (
                         <p className="text-center text-slate-500">
@@ -57,7 +57,7 @@ export default function PortfolioIndex({ portfolios, contact }: Props) {
                                 <Link
                                     key={item.id}
                                     href={`/portofolio/${item.slug}`}
-                                    className="group overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+                                    className="group overflow-hidden rounded-2xl bg-white dark:bg-midnight-surface shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl dark:shadow-none dark:ring-1 dark:ring-white/5 dark:hover:ring-white/10"
                                 >
                                     <div className="relative aspect-[16/10] overflow-hidden">
                                         <img
@@ -70,21 +70,21 @@ export default function PortfolioIndex({ portfolios, contact }: Props) {
                                             loading="lazy"
                                         />
                                         {item.category && (
-                                            <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-slate-900 shadow-sm backdrop-blur-sm">
+                                            <span className="absolute left-4 top-4 rounded-full bg-white/90 dark:bg-midnight-surface/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-white shadow-sm backdrop-blur-sm">
                                                 {item.category}
                                             </span>
                                         )}
                                     </div>
                                     <div className="p-6">
-                                        <div className="mb-2 flex items-center gap-2 text-xs font-medium text-slate-500">
+                                        <div className="mb-2 flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-gray-400">
                                             <span>{item.client}</span>
                                             <span>•</span>
                                             <span>{item.year}</span>
                                         </div>
-                                        <h2 className="text-xl font-bold text-slate-900 group-hover:text-blue-600">
+                                        <h2 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">
                                             {item.title}
                                         </h2>
-                                        <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-slate-600">
+                                        <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-slate-600 dark:text-gray-400">
                                             {item.description}
                                         </p>
                                         <span className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-blue-600">

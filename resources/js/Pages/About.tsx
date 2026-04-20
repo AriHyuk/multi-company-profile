@@ -11,6 +11,7 @@ import {
     ChevronRight,
 } from "lucide-react";
 import ContactSection from "@/Components/Sections/ContactSection";
+import SectionDivider from "@/Components/Sections/SectionDivider";
 
 interface AboutContent {
     id: number;
@@ -50,7 +51,7 @@ export default function About({ content, teamMembers, contact }: Props) {
                 }
             />
 
-            <div className="relative bg-white transition-colors duration-300 dark:bg-midnight pt-16">
+            <div className="relative bg-white transition-colors duration-300 dark:bg-midnight-bg pt-16">
                 {/* Visual Enhancements: Background Pattern */}
                 <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none dark:opacity-[0.05]">
                     <svg className="h-full w-full" fill="none">
@@ -75,10 +76,44 @@ export default function About({ content, teamMembers, contact }: Props) {
 
                 <div className="relative z-10">
                     <AboutHero content={content} />
+                    
+                    <SectionDivider 
+                        fromColor="bg-white dark:bg-midnight-bg" 
+                        toColor="text-slate-50 dark:text-midnight-surface" 
+                        direction="down" 
+                    />
+                    
                     <StatsGrid content={content} />
+                    
+                    <SectionDivider 
+                        fromColor="bg-slate-50 dark:bg-midnight-surface" 
+                        toColor="text-white dark:text-midnight-bg" 
+                        direction="up" 
+                    />
+                    
                     <VisionMission content={content} />
+                    
+                    <SectionDivider 
+                        fromColor="bg-white dark:bg-midnight-bg" 
+                        toColor="text-slate-50 dark:text-midnight-surface" 
+                        direction="down" 
+                    />
+                    
                     <TeamSection members={teamMembers} />
+                    
+                    <SectionDivider 
+                        fromColor="bg-slate-50 dark:bg-midnight-surface" 
+                        toColor="text-white dark:text-midnight-bg" 
+                        direction="up" 
+                    />
+                    
                     <CoreValues />
+
+                    <SectionDivider 
+                        fromColor="bg-white dark:bg-midnight-bg" 
+                        toColor="text-slate-50 dark:text-midnight-surface" 
+                        direction="down" 
+                    />
                 </div>
             </div>
 
@@ -114,7 +149,7 @@ function AboutHero({ content }: { content: AboutContent }) {
                                 "Kami adalah mitra strategis untuk transformasi digital bisnis Anda."}
                         </p>
                         <div className="mt-10 flex items-center gap-x-6">
-                            <button className="rounded-full bg-brand-primary px-8 py-4 text-sm font-semibold text-white shadow-lg hover:bg-brand-primary/90 transition-all hover:scale-105 active:scale-95 dark:bg-brand-accent dark:text-midnight dark:hover:bg-brand-accent/90">
+                            <button className="rounded-full bg-brand-primary px-8 py-4 text-sm font-semibold text-white shadow-lg hover:bg-brand-primary/90 transition-all hover:scale-105 active:scale-95 dark:bg-brand-accent dark:text-midnight-bg dark:hover:bg-brand-accent/90">
                                 Pelajari Selengkapnya
                             </button>
                             <a
@@ -137,7 +172,7 @@ function AboutHero({ content }: { content: AboutContent }) {
                             <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/40 to-transparent opacity-60 dark:from-brand-accent/20" />
                             
                             {/* Floating Decorative Overlay */}
-                            <div className="absolute bottom-6 left-6 right-6 p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white dark:bg-midnight/40">
+                            <div className="absolute bottom-6 left-6 right-6 p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white dark:bg-midnight-bg/40">
                                 <p className="text-sm font-medium">"Teknologi bukan sekadar alat, tapi jembatan menuju masa depan."</p>
                             </div>
                         </div>
@@ -189,7 +224,7 @@ function VisionMission({ content }: { content: AboutContent }) {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
                     {/* Visi - Large Card */}
-                    <div className="lg:col-span-5 relative flex flex-col group overflow-hidden rounded-[2.5rem] bg-brand-primary p-12 shadow-2xl ring-1 ring-white/10 dark:bg-brand-primary/80">
+                    <div className="lg:col-span-5 relative flex flex-col group overflow-hidden rounded-[2.5rem] bg-brand-primary p-12 shadow-2xl ring-1 ring-white/10 dark:bg-midnight-bg dark:ring-brand-accent/20">
                         <div className="relative z-10">
                             <div className="mb-8 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-accent/20 text-brand-accent transition-transform duration-500 group-hover:rotate-12">
                                 <Target className="h-8 w-8" />
@@ -325,8 +360,8 @@ function CoreValues() {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-12 sm:grid-cols-3">
                     {values.map((v, i) => (
-                        <div key={i} className="flex flex-col group p-6 rounded-3xl hover:bg-gray-50 transition-colors dark:hover:bg-midnight-surface">
-                            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-primary text-white mb-6 group-hover:scale-110 transition-transform dark:bg-brand-accent dark:text-midnight">
+                        <div key={i} className="flex flex-col group p-6 rounded-3xl hover:bg-slate-50 transition-colors dark:hover:bg-midnight-surface">
+                            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-primary text-white mb-6 group-hover:scale-110 transition-transform dark:bg-brand-accent dark:text-midnight-bg">
                                 <v.icon className="h-7 w-7" />
                             </div>
                             <div>

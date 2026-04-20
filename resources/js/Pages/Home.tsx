@@ -82,7 +82,7 @@ export default function Home({
                 imageUrl="/images/hero-poster.png"
             />
 
-            <SectionDivider fromColor="bg-slate-50 dark:bg-midnight-bg" toColor="text-white dark:text-midnight-surface" direction="down" />
+            <SectionDivider fromColor="bg-white dark:bg-midnight-bg" toColor="text-slate-50 dark:text-midnight-surface" direction="down" />
 
             <AboutPreview about={aboutContent} />
             

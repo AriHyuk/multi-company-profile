@@ -57,17 +57,17 @@ export default function Index({ team, contact }: Props) {
 
 
             {/* Team Grid */}
-            <section className="bg-slate-50 py-20 dark:bg-midnight-surface">
+            <section className="bg-slate-50 dark:bg-midnight-bg py-20">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     {team.length > 0 ? (
                         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             {team.map((member) => (
                                 <div
                                     key={member.id}
-                                    className="group relative flex flex-col items-center bg-white rounded-3xl p-8 ring-1 ring-gray-100 shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:ring-brand-primary/20"
+                                    className="group relative flex flex-col items-center bg-white dark:bg-midnight-surface rounded-3xl p-8 ring-1 ring-gray-100 dark:ring-white/5 shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:ring-brand-primary/20 dark:shadow-none dark:hover:ring-white/10"
                                 >
                                     {/* Circular Photo */}
-                                    <div className="relative h-36 w-36 shrink-0 overflow-hidden rounded-full ring-4 ring-gray-50 shadow-lg group-hover:ring-brand-primary/20 transition-all duration-500">
+                                    <div className="relative h-36 w-36 shrink-0 overflow-hidden rounded-full ring-4 ring-gray-50 dark:ring-white/10 shadow-lg group-hover:ring-brand-primary/20 transition-all duration-500">
                                         {member.photo ? (
                                             <img
                                                 src={`/storage/${member.photo}`}
@@ -83,14 +83,14 @@ export default function Index({ team, contact }: Props) {
 
                                     {/* Detail */}
                                     <div className="mt-6 text-center">
-                                        <h3 className="text-lg font-bold text-gray-900 group-hover:text-brand-primary transition-colors">
+                                        <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-brand-primary transition-colors">
                                             {member.name}
                                         </h3>
                                         <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-brand-accent">
                                             {member.role}
                                         </p>
                                         {member.bio && (
-                                            <p className="mt-4 text-sm text-gray-500 line-clamp-3 leading-relaxed">
+                                            <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 line-clamp-3 leading-relaxed">
                                                 {member.bio}
                                             </p>
                                         )}
@@ -99,8 +99,8 @@ export default function Index({ team, contact }: Props) {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-20 bg-white rounded-3xl ring-1 ring-gray-100">
-                            <p className="text-gray-500">
+                        <div className="text-center py-20 bg-white dark:bg-midnight-surface rounded-3xl ring-1 ring-gray-100 dark:ring-white/5">
+                            <p className="text-gray-500 dark:text-gray-400">
                                 Belum ada tim yang ditambahkan.
                             </p>
                         </div>

@@ -122,15 +122,15 @@ export default function PortfolioShow({ portfolio, contact }: Props) {
             </section>
 
             {/* Project Details */}
-            <section className="py-20 bg-white">
+            <section className="py-20 bg-white dark:bg-midnight-bg">
                 <div className="mx-auto max-w-5xl px-6">
                     <div className="grid gap-16 lg:grid-cols-12">
                         {/* Description */}
                         <div className="lg:col-span-12">
-                            <h2 className="text-3xl font-bold text-slate-900 mb-6">
+                            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">
                                 Tentang Proyek
                             </h2>
-                            <div className="prose prose-slate max-w-none text-lg text-slate-600 leading-relaxed">
+                            <div className="prose prose-slate dark:prose-invert max-w-none text-lg text-slate-600 dark:text-gray-400 leading-relaxed">
                                 {portfolio.description}
                             </div>
                         </div>
@@ -139,14 +139,14 @@ export default function PortfolioShow({ portfolio, contact }: Props) {
                     {/* Gallery */}
                     {portfolio.images && portfolio.images.length > 0 && (
                         <div className="mt-20">
-                            <h2 className="text-3xl font-bold text-slate-900 mb-10">
+                            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-10">
                                 Galeri Proyek
                             </h2>
                             <div className="grid gap-6 sm:grid-cols-2">
                                 {portfolio.images.map((img, index) => (
                                     <div
                                         key={index}
-                                        className="group relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-100 shadow-md"
+                                        className="group relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-100 dark:bg-midnight-surface shadow-md dark:shadow-none dark:ring-1 dark:ring-white/5"
                                     >
                                         <img
                                             src={img}

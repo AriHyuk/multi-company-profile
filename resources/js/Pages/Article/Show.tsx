@@ -45,22 +45,22 @@ export default function ArticleShow({ article, contact }: Props) {
             />
 
             {/* Article Header */}
-            <article className="bg-white">
+            <article className="bg-white dark:bg-midnight-bg">
                 <header className="mx-auto max-w-4xl px-6 py-20 text-center">
                     <div className="mb-6">
                         <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-bold uppercase tracking-wider text-blue-700">
                             {article.category}
                         </span>
                     </div>
-                    <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+                    <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
                         {article.title}
                     </h1>
-                    <div className="mt-8 flex items-center justify-center gap-4 text-slate-500">
+                    <div className="mt-8 flex items-center justify-center gap-4 text-slate-500 dark:text-gray-400">
                         <div className="flex items-center gap-2">
-                            <div className="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center text-sm text-slate-700 font-bold uppercase">
+                            <div className="h-10 w-10 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-sm text-slate-700 dark:text-gray-300 font-bold uppercase">
                                 {article.author.name.charAt(0)}
                             </div>
-                            <span className="font-semibold text-slate-900">
+                            <span className="font-semibold text-slate-900 dark:text-white">
                                 {article.author.name}
                             </span>
                         </div>
@@ -73,7 +73,7 @@ export default function ArticleShow({ article, contact }: Props) {
 
                 {/* Featured Image */}
                 <div className="mx-auto max-w-6xl px-6">
-                    <div className="overflow-hidden rounded-3xl shadow-xl ring-1 ring-slate-100">
+                    <div className="overflow-hidden rounded-3xl shadow-xl ring-1 ring-slate-100 dark:ring-white/5">
                         <img
                             src={
                                 article.thumbnail ||
@@ -88,23 +88,23 @@ export default function ArticleShow({ article, contact }: Props) {
                 {/* Content */}
                 <div className="mx-auto max-w-3xl px-6 py-20">
                     <div
-                        className="prose prose-lg prose-slate max-w-none 
-                        prose-headings:font-bold prose-headings:text-slate-900 
-                        prose-p:leading-relaxed prose-p:text-slate-600
-                        prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
+                        className="prose prose-lg prose-slate dark:prose-invert max-w-none 
+                        prose-headings:font-bold prose-headings:text-slate-900 dark:prose-headings:text-white
+                        prose-p:leading-relaxed prose-p:text-slate-600 dark:prose-p:text-gray-400
+                        prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
                         prose-img:rounded-2xl prose-blockquote:border-blue-500"
                         dangerouslySetInnerHTML={{ __html: article.body }}
                     />
 
                     {/* Footer / Share */}
-                    <footer className="mt-16 border-t border-slate-100 pt-10">
+                    <footer className="mt-16 border-t border-slate-100 dark:border-white/5 pt-10">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                             <div>
                                 <h4 className="text-sm font-bold uppercase tracking-widest text-slate-400">
                                     Bagikan
                                 </h4>
                                 <div className="mt-4 flex gap-4">
-                                    <button className="h-10 w-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:bg-blue-600 hover:text-white transition-all">
+                                    <button className="h-10 w-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-gray-400 hover:bg-blue-600 hover:text-white transition-all">
                                         <svg
                                             className="h-5 w-5 fill-current"
                                             viewBox="0 0 24 24"
@@ -112,7 +112,7 @@ export default function ArticleShow({ article, contact }: Props) {
                                             <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
                                         </svg>
                                     </button>
-                                    <button className="h-10 w-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:bg-blue-600 hover:text-white transition-all">
+                                    <button className="h-10 w-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-gray-400 hover:bg-blue-600 hover:text-white transition-all">
                                         <svg
                                             className="h-5 w-5 fill-current"
                                             viewBox="0 0 24 24"
@@ -125,7 +125,7 @@ export default function ArticleShow({ article, contact }: Props) {
                             <div className="flex flex-wrap gap-2">
                                 <Link
                                     href="/artikel"
-                                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-2 text-sm font-bold text-slate-700 transition-all hover:bg-slate-50"
+                                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 px-6 py-2 text-sm font-bold text-slate-700 dark:text-gray-300 transition-all hover:bg-slate-50 dark:hover:bg-white/10"
                                 >
                                     <svg
                                         className="h-4 w-4"

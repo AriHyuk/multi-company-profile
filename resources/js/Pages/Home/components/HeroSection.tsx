@@ -152,7 +152,7 @@ export default function HeroSection({
     imageUrl,
 }: HeroProps) {
     return (
-        <section className="relative overflow-hidden bg-slate-50 selection:bg-brand-accent/30 py-8 lg:py-0 transition-colors duration-300 dark:bg-midnight-bg">
+        <section className="relative overflow-hidden bg-white selection:bg-brand-accent/30 py-8 lg:py-0 transition-colors duration-300 dark:bg-midnight-bg">
             {/* Modular animations injection */}
             <style dangerouslySetInnerHTML={{ __html: HERO_ANIMATIONS }} />
 
