@@ -31,7 +31,7 @@ const DynamicIcon = ({ name }: { name: string }) => {
     return <IconComponent className="h-10 w-10 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />;
 };
 
-export default function ServicesIndex({ services }: Props) {
+export default function ServicesIndex({ services, contact }: Props) {
     return (
         <PublicLayout>
             <Seo
