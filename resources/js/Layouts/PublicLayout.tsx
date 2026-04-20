@@ -1,6 +1,19 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import { Link, usePage } from "@inertiajs/react";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
+import { ChevronDown, ChevronRight, Network, HeartPulse, GraduationCap, BadgeCheck, Monitor, Palette, TrendingUp } from "lucide-react";
+
+interface SubItem {
+    href: string;
+    label: string;
+    icon?: React.ReactNode;
+    children?: SubItem[];
+}
+interface NavLink {
+    href: string;
+    label: string;
+    subItems?: SubItem[];
+}
 
 export default function PublicLayout({ children }: PropsWithChildren) {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -12,13 +25,42 @@ export default function PublicLayout({ children }: PropsWithChildren) {
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
-    const navLinks = [
+    const navLinks: NavLink[] = [
         { href: "/", label: "Beranda" },
         { href: "/tentang-kami", label: "Tentang Kami" },
-        { href: "/layanan", label: "Layanan" },
+        {
+            href: "/layanan",
+            label: "Layanan",
+            subItems: [
+                {
+                    href: "/layanan/network-application",
+                    label: "Network & Application",
+                    icon: <Network className="h-4 w-4" />,
+                },
+                {
+                    href: "/layanan/it-care",
+                    label: "IT Care",
+                    icon: <HeartPulse className="h-4 w-4" />,
+                    children: [
+                        {
+                            href: "/layanan/pelatihan-bidang-it",
+                            label: "Pelatihan Bidang IT",
+                            icon: <GraduationCap className="h-3.5 w-3.5" />,
+                        },
+                        {
+                            href: "/layanan/sertifikasi-keahlian",
+                            label: "Sertifikasi Keahlian",
+                            icon: <BadgeCheck className="h-3.5 w-3.5" />,
+                        },
+                    ],
+                },
+            ],
+        },
         { href: "/portofolio", label: "Portofolio" },
         { href: "/artikel", label: "Artikel" },
     ];
+
+
 
     return (
         <div className="flex min-h-screen flex-col bg-slate-50 text-gray-900">
@@ -38,13 +80,18 @@ export default function PublicLayout({ children }: PropsWithChildren) {
 
                     {/* Desktop Nav */}
                     <nav className="hidden items-center gap-2 md:flex">
-                        {navLinks.map((item) => (
-                            <NavItem
-                                key={item.href}
-                                href={item.href}
-                                label={item.label}
-                            />
-                        ))}
+                        {navLinks.map((item) => {
+                            if (item.subItems && item.subItems.length > 0) {
+                                return <DropdownNavItem key={item.label} item={item} />;
+                            }
+                            return (
+                                <NavItem
+                                    key={item.label}
+                                    href={item.href}
+                                    label={item.label}
+                                />
+                            );
+                        })}
                         <Link
                             href="/kontak"
                             className="ml-4 rounded-xl bg-brand-primary px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-brand-primary/20 transition-all duration-200 hover:bg-brand-primary/90 hover:-translate-y-0.5 active:scale-95"
@@ -93,14 +140,22 @@ export default function PublicLayout({ children }: PropsWithChildren) {
                     }`}
                 >
                     <nav className="flex flex-col gap-1 border-t border-gray-100 bg-white px-4 py-8 shadow-2xl">
-                        {navLinks.map((item) => (
-                            <MobileNavItem
-                                key={item.href}
-                                href={item.href}
-                                label={item.label}
-                                onClick={() => setMobileOpen(false)}
-                            />
-                        ))}
+                        {navLinks.map((item) =>
+                            item.subItems ? (
+                                <MobileDropdownNavItem
+                                    key={item.href}
+                                    item={item}
+                                    onClose={() => setMobileOpen(false)}
+                                />
+                            ) : (
+                                <MobileNavItem
+                                    key={item.href}
+                                    href={item.href}
+                                    label={item.label}
+                                    onClick={() => setMobileOpen(false)}
+                                />
+                            )
+                        )}
                         <Link
                             href="/kontak"
                             onClick={() => setMobileOpen(false)}
@@ -231,6 +286,130 @@ function NavItem({ href, label }: { href: string; label: string }) {
     );
 }
 
+/** Desktop: hover dropdown dengan nested flyout untuk sub-children */
+function DropdownNavItem({ item }: { item: NavLink }) {
+    const { url } = usePage();
+    const isActive =
+        url === item.href || (item.href !== "/" && url.startsWith(item.href));
+    const [open, setOpen] = useState(false);
+    const [flyoutIndex, setFlyoutIndex] = useState<number | null>(null);
+    const ref = useRef<HTMLDivElement>(null);
+
+    // Tutup dropdown kalau klik di luar
+    useEffect(() => {
+        const handler = (e: MouseEvent) => {
+            if (ref.current && !ref.current.contains(e.target as Node)) {
+                setOpen(false);
+                setFlyoutIndex(null);
+            }
+        };
+        document.addEventListener("mousedown", handler);
+        return () => document.removeEventListener("mousedown", handler);
+    }, []);
+
+    return (
+        <div
+            ref={ref}
+            className="relative"
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => { setOpen(false); setFlyoutIndex(null); }}
+        >
+            {/* Trigger button */}
+            <button
+                className={`relative flex items-center gap-1 px-4 py-2 text-sm font-bold transition-all duration-200 ${
+                    isActive
+                        ? "text-brand-primary"
+                        : "text-gray-500 hover:text-brand-primary"
+                }`}
+                onClick={() => setOpen((v) => !v)}
+                aria-haspopup="true"
+                aria-expanded={open}
+            >
+                {item.label}
+                <ChevronDown
+                    className={`h-4 w-4 text-brand-primary/60 transition-transform duration-300 ${
+                        open ? "rotate-180 text-brand-primary" : ""
+                    }`}
+                />
+                {isActive && (
+                    <span className="absolute bottom-[-4px] left-4 right-4 h-1 rounded-full bg-brand-accent shadow-[0_2px_10px_rgba(0,204,204,0.4)]" />
+                )}
+            </button>
+
+            {/* Dropdown panel */}
+            <div
+                className={`absolute left-0 top-full z-50 mt-2 w-56 origin-top-left transition-all duration-300 ${
+                    open
+                        ? "scale-100 opacity-100 translate-y-0"
+                        : "scale-95 opacity-0 -translate-y-2 pointer-events-none"
+                }`}
+            >
+                <div className="rounded-2xl border border-gray-100 bg-white shadow-xl shadow-gray-900/10 ring-1 ring-black/5">
+                    <div className="p-2">
+                        {item.subItems?.map((sub, idx) => (
+                            <div
+                                key={sub.href}
+                                className="relative"
+                                onMouseEnter={() =>
+                                    sub.children ? setFlyoutIndex(idx) : setFlyoutIndex(null)
+                                }
+                            >
+                                <Link
+                                    href={sub.href}
+                                    className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${
+                                        url.startsWith(sub.href)
+                                            ? "bg-brand-primary/10 text-brand-primary"
+                                            : "text-gray-700 hover:bg-gray-50 hover:text-brand-primary"
+                                    }`}
+                                >
+                                    {sub.icon && (
+                                        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-primary/10 text-brand-primary">
+                                            {sub.icon}
+                                        </span>
+                                    )}
+                                    <span className="flex-1">{sub.label}</span>
+                                    {sub.children && (
+                                        <ChevronRight className="h-3.5 w-3.5 text-gray-400" />
+                                    )}
+                                </Link>
+
+                                {/* Nested flyout */}
+                                {sub.children && flyoutIndex === idx && (
+                                    <div className="absolute left-full top-0 z-50 ml-1 w-52">
+                                        <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl shadow-gray-900/10 ring-1 ring-black/5">
+                                            <div className="p-2">
+                                                {sub.children.map((child) => (
+                                                    <Link
+                                                        key={child.href}
+                                                        href={child.href}
+                                                        className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${
+                                                            url.startsWith(child.href)
+                                                                ? "bg-brand-primary/10 text-brand-primary"
+                                                                : "text-gray-700 hover:bg-gray-50 hover:text-brand-primary"
+                                                        }`}
+                                                    >
+                                                        {child.icon && (
+                                                            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-brand-accent/10 text-brand-accent">
+                                                                {child.icon}
+                                                            </span>
+                                                        )}
+                                                        {child.label}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+
 function MobileNavItem({
     href,
     label,
@@ -255,5 +434,123 @@ function MobileNavItem({
         >
             {label}
         </Link>
+    );
+}
+
+/** Mobile: accordion dropdown */
+function MobileDropdownNavItem({
+    item,
+    onClose,
+}: {
+    item: NavLink;
+    onClose: () => void;
+}) {
+    const { url } = usePage();
+    const isActive =
+        url === item.href || (item.href !== "/" && url.startsWith(item.href));
+    const [open, setOpen] = useState(isActive);
+    const [openChild, setOpenChild] = useState<string | null>(null);
+
+    return (
+        <div className="rounded-xl overflow-hidden">
+            {/* Main trigger */}
+            <button
+                onClick={() => setOpen((v) => !v)}
+                className={`flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-base font-bold transition-all duration-200 ${
+                    isActive
+                        ? "bg-brand-primary/5 text-brand-primary"
+                        : "text-gray-600 hover:bg-gray-50 hover:text-brand-primary"
+                }`}
+            >
+                {item.label}
+                <ChevronDown
+                    className={`h-4 w-4 transition-transform duration-200 ${
+                        open ? "rotate-180" : ""
+                    }`}
+                />
+            </button>
+
+            {/* Sub items */}
+            <div
+                className={`overflow-hidden transition-all duration-300 ${
+                    open ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
+                }`}
+            >
+                <div className="ml-4 mt-1 flex flex-col gap-0.5 border-l-2 border-brand-primary/20 pl-3">
+                    {item.subItems?.map((sub) => (
+                        <div key={sub.href}>
+                            {sub.children ? (
+                                <>
+                                    <button
+                                        onClick={() =>
+                                            setOpenChild(
+                                                openChild === sub.href
+                                                    ? null
+                                                    : sub.href
+                                            )
+                                        }
+                                        className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 hover:text-brand-primary"
+                                    >
+                                        <span className="flex items-center gap-2">
+                                            {sub.icon && (
+                                                <span className="text-brand-primary">
+                                                    {sub.icon}
+                                                </span>
+                                            )}
+                                            {sub.label}
+                                        </span>
+                                        <ChevronDown
+                                            className={`h-3.5 w-3.5 transition-transform duration-200 ${
+                                                openChild === sub.href
+                                                    ? "rotate-180"
+                                                    : ""
+                                            }`}
+                                        />
+                                    </button>
+                                    <div
+                                        className={`overflow-hidden transition-all duration-200 ${
+                                            openChild === sub.href
+                                                ? "max-h-40 opacity-100"
+                                                : "max-h-0 opacity-0"
+                                        }`}
+                                    >
+                                        <div className="ml-4 flex flex-col gap-0.5 border-l-2 border-brand-accent/20 pl-3 pb-1">
+                                            {sub.children.map((child) => (
+                                                <Link
+                                                    key={child.href}
+                                                    href={child.href}
+                                                    onClick={onClose}
+                                                    className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-brand-primary"
+                                                >
+                                                    {child.icon && (
+                                                        <span className="text-brand-accent">
+                                                            {child.icon}
+                                                        </span>
+                                                    )}
+                                                    {child.label}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <Link
+                                    href={sub.href}
+                                    onClick={onClose}
+                                    className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 hover:text-brand-primary"
+                                >
+                                    {sub.icon && (
+                                        <span className="text-brand-primary">
+                                            {sub.icon}
+                                        </span>
+                                    )}
+                                    {sub.label}
+                                </Link>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
     );
 }

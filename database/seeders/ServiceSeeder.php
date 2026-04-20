@@ -38,6 +38,42 @@ class ServiceSeeder extends Seeder
                 'order'          => 3,
                 'is_active'      => true,
             ],
+            [
+                'title'          => 'Network & Application',
+                'slug'           => 'network-application',
+                'description'    => 'Layanan infrastruktur jaringan dan pengembangan aplikasi terintegrasi. Kami menyediakan solusi networking yang handal, konfigurasi server, serta pengembangan aplikasi berbasis kebutuhan bisnis Anda untuk memastikan konektivitas dan performa sistem yang optimal.',
+                'icon'           => '🌐',
+                'price_estimate' => 'Hubungi Kami',
+                'order'          => 4,
+                'is_active'      => true,
+            ],
+            [
+                'title'          => 'IT Care',
+                'slug'           => 'it-care',
+                'description'    => 'Layanan perawatan dan dukungan IT menyeluruh dari Digikova. Mulai dari pelatihan sumber daya manusia di bidang teknologi informasi hingga sertifikasi keahlian yang diakui secara profesional, kami hadir mendukung transformasi digital Anda.',
+                'icon'           => '💙',
+                'price_estimate' => 'Hubungi Kami',
+                'order'          => 5,
+                'is_active'      => true,
+            ],
+            [
+                'title'          => 'Pelatihan Bidang IT',
+                'slug'           => 'pelatihan-bidang-it',
+                'description'    => 'Program pelatihan teknologi informasi yang komprehensif untuk individu maupun institusi. Kurikulum dirancang oleh praktisi industri untuk memastikan relevansi dan kualitas pembelajaran yang langsung dapat diterapkan di dunia kerja.',
+                'icon'           => '🎓',
+                'price_estimate' => 'Hubungi Kami',
+                'order'          => 6,
+                'is_active'      => true,
+            ],
+            [
+                'title'          => 'Sertifikasi Keahlian',
+                'slug'           => 'sertifikasi-keahlian',
+                'description'    => 'Program sertifikasi keahlian di bidang teknologi informasi yang diakui secara profesional. Tingkatkan kompetensi dan nilai jual Anda di industri teknologi dengan sertifikat resmi yang diakui oleh lembaga-lembaga profesional.',
+                'icon'           => '🏅',
+                'price_estimate' => 'Hubungi Kami',
+                'order'          => 7,
+                'is_active'      => true,
+            ],
         ];
 
         foreach ($services as $service) {

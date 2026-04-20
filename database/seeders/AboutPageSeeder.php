@@ -13,7 +13,7 @@ class AboutPageSeeder extends Seeder
     public function run(): void
     {
         \App\Models\AboutContent::create([
-            'description' => 'PT Multi Company Profiles adalah perusahaan teknologi terdepan yang berfokus pada solusi inovatif untuk ekosistem digital. Kami percaya pada kolaborasi dan keunggulan dalam memberikan nilai tambah bagi mitra kami.',
+            'description' => 'Digikova adalah perusahaan yang bergerak di bidang layanan Teknologi Informasi dan Komunikasi (TIK) yang berfokus pada peningkatan literasi digital serta pengembangan solusi teknologi bagi masyarakat dan bisnis. Melalui kegiatan seminar, pelatihan, dan layanan IT Support, Digikova membantu berbagai kalangan, mulai dari pendidikan, perusahaan, hingga masyarakat umum, dalam memanfaatkan teknologi secara optimal. Dengan komitmen pada profesionalisme dan inovasi, Digikova hadir sebagai mitra terpercaya dalam mendukung transformasi digital.',
             'vision' => 'Menjadi pusat inovasi dan katalisator pertumbuhan bisnis digital di Asia Tenggara.',
             'mission' => 'Memberikan solusi teknologi berkelas dunia, membangun ekosistem yang berkelanjutan, dan memberdayakan talenta digital terbaik.',
             'founded_year' => 2015,
