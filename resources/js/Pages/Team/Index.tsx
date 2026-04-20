@@ -36,62 +36,64 @@ export default function Index({ team, contact }: Props) {
                 </div>
 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                    <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
-                        Orang di Balik Layar
+                    {/* Eyebrow */}
+                    <span className="inline-flex items-center rounded-full bg-white/10 px-4 py-1.5 text-sm font-semibold text-brand-accent ring-1 ring-inset ring-white/20 mb-6 tracking-wider uppercase">
+                        People Behind DIGIKOVA
+                    </span>
+                    <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
+                        Bukan Sekadar Tim —{" "}
+                        <span className="text-brand-accent">
+                            Ini Keluarga Inovator
+                        </span>
                     </h1>
-                    <p className="mt-6 max-w-2xl mx-auto text-lg leading-relaxed text-gray-300 sm:text-xl">
-                        Kami adalah kumpulan profesional yang memiliki passion
-                        tinggi pada teknologi dan desain. Berkomitmen memberikan
-                        hasil terbaik untuk setiap partner.
+                    <p className="mt-6 max-w-2xl mx-auto text-lg leading-relaxed text-blue-100/80 sm:text-xl">
+                        Di balik setiap solusi digital yang kami bangun, ada
+                        individu-individu luar biasa yang berkolaborasi tanpa
+                        henti. Kenali mereka — para arsitek masa depan digital
+                        bisnis Anda.
                     </p>
                 </div>
             </section>
 
+
             {/* Team Grid */}
-            <section className="bg-brand-secondary py-20">
+            <section className="bg-slate-50 py-20 dark:bg-midnight-surface">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     {team.length > 0 ? (
-                        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             {team.map((member) => (
                                 <div
                                     key={member.id}
-                                    className="group bg-white rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                                    className="group relative flex flex-col items-center bg-white rounded-3xl p-8 ring-1 ring-gray-100 shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:ring-brand-primary/20"
                                 >
-                                    {/* Photo Container */}
-                                    <div className="relative aspect-[4/5] bg-gray-100 overflow-hidden">
+                                    {/* Circular Photo */}
+                                    <div className="relative h-36 w-36 shrink-0 overflow-hidden rounded-full ring-4 ring-gray-50 shadow-lg group-hover:ring-brand-primary/20 transition-all duration-500">
                                         {member.photo ? (
                                             <img
                                                 src={`/storage/${member.photo}`}
                                                 alt={member.name}
-                                                className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                             />
                                         ) : (
-                                            <div className="h-full w-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-5xl font-bold uppercase">
+                                            <div className="h-full w-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-4xl font-bold uppercase">
                                                 {member.name.charAt(0)}
                                             </div>
                                         )}
-                                        {/* Gradient Overlay bottom to top */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     </div>
 
                                     {/* Detail */}
-                                    <div className="p-6 flex flex-col flex-grow">
-                                        <h3 className="text-xl font-bold text-gray-900">
+                                    <div className="mt-6 text-center">
+                                        <h3 className="text-lg font-bold text-gray-900 group-hover:text-brand-primary transition-colors">
                                             {member.name}
                                         </h3>
-                                        <p className="mt-1 text-sm font-semibold uppercase tracking-wider text-brand-accent">
+                                        <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-brand-accent">
                                             {member.role}
                                         </p>
-
                                         {member.bio && (
-                                            <p className="mt-4 text-sm text-gray-500 line-clamp-3">
+                                            <p className="mt-4 text-sm text-gray-500 line-clamp-3 leading-relaxed">
                                                 {member.bio}
                                             </p>
                                         )}
-
-                                        <div className="mt-auto pt-6 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                            <div className="h-1 w-12 bg-brand-primary rounded-full group-hover:w-full transition-all duration-500" />
-                                        </div>
                                     </div>
                                 </div>
                             ))}

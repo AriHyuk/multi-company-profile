@@ -5,8 +5,8 @@ import AboutPreview from "./Home/components/AboutPreview";
 import ServicesPreview from "./Home/components/ServicesPreview";
 import FeaturedProjects from "./Home/components/FeaturedProjects";
 import TeamPreview from "./Home/components/TeamPreview";
-import CtaBanner from "./Home/components/CtaBanner";
-import ContactSection from "./Home/components/ContactSection";
+import ContactSection from "@/Components/Sections/ContactSection";
+import SectionDivider from "@/Components/Sections/SectionDivider";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -81,12 +81,26 @@ export default function Home({
                 ctaUrl={hero.ctaUrl}
                 imageUrl="/images/hero-poster.png"
             />
+
+            <SectionDivider fromColor="bg-slate-50 dark:bg-midnight-bg" toColor="text-white dark:text-midnight-surface" direction="down" />
+
             <AboutPreview about={aboutContent} />
+            
+            <SectionDivider fromColor="bg-slate-50 dark:bg-midnight-surface" toColor="text-white dark:text-midnight-bg" direction="up" />
+
             <ServicesPreview services={servicesPreview} />
+
+            <SectionDivider fromColor="bg-white dark:bg-midnight-bg" toColor="text-slate-50 dark:text-midnight-surface" direction="down" />
+
             <TeamPreview members={teamPreview} />
+
+            <SectionDivider fromColor="bg-slate-50 dark:bg-midnight-surface" toColor="text-white dark:text-midnight-bg" direction="up" />
+
             <FeaturedProjects />
-            <CtaBanner ctaUrl={hero.ctaUrl} />
-            <ContactSection contact={contact} />
+
+            <SectionDivider fromColor="bg-white dark:bg-midnight-bg" toColor="text-slate-50 dark:text-midnight-surface" direction="down" />
+
+            <ContactSection />
         </PublicLayout>
     );
 }

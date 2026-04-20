@@ -18,7 +18,7 @@ export interface HeroProps {
 
 const HeroBadge = memo(() => (
     <div className="hero-animate-1">
-        <span className="inline-flex items-center gap-2 rounded-full bg-brand-primary/8 px-4 py-1.5 text-sm font-semibold text-brand-primary ring-1 ring-brand-primary/15">
+        <span className="inline-flex items-center gap-2 rounded-full bg-brand-primary/8 px-4 py-1.5 text-sm font-semibold text-brand-primary ring-1 ring-brand-primary/15 dark:bg-brand-accent/10 dark:text-brand-accent dark:ring-brand-accent/20">
             <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-accent" />
@@ -29,13 +29,13 @@ const HeroBadge = memo(() => (
 ));
 
 const HeroHeading = memo(({ title }: { title: string }) => (
-    <h1 className="hero-animate-2 mt-6 max-w-xl text-4xl font-black leading-[1.08] tracking-tight text-brand-primary sm:text-5xl xl:text-6xl">
+    <h1 className="hero-animate-2 mt-6 max-w-xl text-4xl font-black leading-[1.08] tracking-tight text-brand-primary dark:text-white sm:text-5xl xl:text-6xl">
         {title.split(" ").map((word, i) =>
             word.toLowerCase() === "digital" ||
             word.toLowerCase() === "bisnis" ? (
                 <span
                     key={i}
-                    className="bg-gradient-to-r from-brand-primary via-brand-bridge to-brand-accent bg-clip-text text-transparent"
+                    className="bg-gradient-to-r from-brand-primary via-brand-bridge to-brand-accent bg-clip-text text-transparent dark:from-brand-accent dark:to-brand-bridge"
                 >
                     {word}{" "}
                 </span>
@@ -55,7 +55,7 @@ const HeroCTAs = memo(
                 </PrimaryButton>
             </Link>
             <Link href="/portfolio">
-                <SecondaryButton className="group px-8 py-3.5 text-base capitalize border-brand-primary/15 text-brand-primary hover:bg-brand-primary/5 transition-all duration-300 hover:-translate-y-1">
+                <SecondaryButton className="group px-8 py-3.5 text-base capitalize border-brand-primary/20 text-brand-primary hover:bg-brand-primary/8 hover:border-brand-primary/40 dark:border-brand-accent/30 dark:text-brand-accent dark:hover:bg-brand-accent/10 dark:hover:border-brand-accent/60 dark:hover:shadow-[0_0_20px_rgba(0,204,204,0.15)] transition-all duration-300 hover:-translate-y-1">
                     Lihat Portofolio
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -87,12 +87,12 @@ const HeroStats = memo(() => (
     <div className="hero-animate-5 mt-10 flex items-center gap-8">
         {STATS.map((stat, i) => (
             <React.Fragment key={stat.label}>
-                {i > 0 && <div className="h-10 w-px bg-gray-200" />}
+                {i > 0 && <div className="h-10 w-px bg-gray-200 dark:bg-white/10" />}
                 <div className="flex flex-col">
-                    <span className="text-3xl font-black text-brand-primary leading-none">
+                    <span className="text-3xl font-black text-brand-primary dark:text-brand-accent leading-none">
                         {stat.value}
                     </span>
-                    <span className="mt-1 text-xs font-semibold uppercase tracking-widest text-gray-400">
+                    <span className="mt-1 text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400">
                         {stat.label}
                     </span>
                 </div>
@@ -109,9 +109,9 @@ const HeroVisual = memo(({ imageUrl }: { imageUrl?: string }) => {
 
     return (
         <div className="hero-animate-2 relative w-full h-full flex items-center justify-center lg:justify-end">
-            <div className="image-parallax shadow-float relative w-full aspect-[4/3] max-w-[640px] rounded-[2.5rem] overflow-hidden group">
+            <div className="image-parallax shadow-float relative w-full aspect-[4/3] max-w-[640px] rounded-[2.5rem] overflow-hidden group shadow-2xl shadow-brand-primary/20 dark:shadow-black/60">
                 {/* Image Wrapper with Glass Overlay */}
-                <div className="absolute inset-0 z-10 bg-gradient-to-tr from-brand-primary/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-700" />
+                <div className="absolute inset-0 z-10 bg-gradient-to-tr from-brand-primary/20 to-transparent opacity-60 group-hover:opacity-40 dark:from-brand-accent/20 transition-opacity duration-700" />
 
                 <img
                     src={imageUrl || fallbackImage}
@@ -152,7 +152,7 @@ export default function HeroSection({
     imageUrl,
 }: HeroProps) {
     return (
-        <section className="relative overflow-hidden bg-brand-secondary selection:bg-brand-accent/30 py-8 lg:py-0">
+        <section className="relative overflow-hidden bg-slate-50 selection:bg-brand-accent/30 py-8 lg:py-0 transition-colors duration-300 dark:bg-midnight-bg">
             {/* Modular animations injection */}
             <style dangerouslySetInnerHTML={{ __html: HERO_ANIMATIONS }} />
 
@@ -170,7 +170,7 @@ export default function HeroSection({
                     <div className="flex flex-col items-start text-left lg:py-12 z-10">
                         <HeroBadge />
                         <HeroHeading title={title} />
-                        <p className="hero-animate-3 mt-8 max-w-lg text-lg leading-relaxed text-gray-500 sm:text-xl font-medium">
+                        <p className="hero-animate-3 mt-8 max-w-lg text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl font-medium">
                             {subtitle}
                         </p>
                         <HeroCTAs ctaLabel={ctaLabel} ctaUrl={ctaUrl} />
