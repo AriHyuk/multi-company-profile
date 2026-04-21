@@ -1,8 +1,54 @@
 import { useForm, usePage } from "@inertiajs/react";
-import { FormEvent } from "react";
+import { FormEvent, ReactNode } from "react";
+import { PageProps } from "@/types";
 
-export default function ContactSection() {
-    const { contact } = usePage().props as any;
+interface ContactInfo {
+    email: string;
+    phone: string;
+    address: string;
+}
+
+interface ContactSectionProps {
+    contact?: ContactInfo;
+}
+
+/**
+ * Internal sub-component for contact details to keep the main component clean
+ */
+function ContactInfoItem({ 
+    icon, 
+    label, 
+    value, 
+    href 
+}: { 
+    icon: ReactNode; 
+    label: string; 
+    value: string; 
+    href?: string;
+}) {
+    return (
+        <div className="flex items-center gap-6 group">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-brand-primary shadow-lg ring-1 ring-gray-200 transition-all group-hover:bg-brand-primary group-hover:text-white group-hover:ring-brand-primary dark:bg-midnight-bg dark:text-brand-accent dark:shadow-2xl dark:ring-white/10 dark:group-hover:bg-brand-accent dark:group-hover:ring-brand-accent">
+                {icon}
+            </div>
+            <div className="transition-colors duration-300">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest dark:text-slate-500">{label}</p>
+                {href ? (
+                    <a href={href} className="mt-1 block text-xl font-bold text-brand-primary hover:text-brand-bridge transition-colors tracking-tight dark:text-white dark:hover:text-brand-accent">
+                        {value}
+                    </a>
+                ) : (
+                    <p className="mt-1 text-xl font-bold text-brand-primary tracking-tight dark:text-white">{value}</p>
+                )}
+            </div>
+        </div>
+    );
+}
+
+export default function ContactSection({ contact: propContact }: ContactSectionProps) {
+    // Fallback to shared sharedContact if prop not provided
+    const { contact: sharedContact } = usePage<PageProps<{ contact: ContactInfo }>>().props;
+    const contact = propContact || sharedContact;
     
     const { data, setData, post, processing, errors, reset, wasSuccessful } =
         useForm({
@@ -43,49 +89,37 @@ export default function ContactSection() {
                     {/* Left Column: Contact Info */}
                     <div className="flex flex-col justify-center">
                         <div className="space-y-12">
-                            {/* Phone */}
-                            <div className="flex items-center gap-6 group">
-                                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-brand-primary shadow-lg ring-1 ring-gray-200 transition-all group-hover:bg-brand-primary group-hover:text-white group-hover:ring-brand-primary dark:bg-midnight-bg dark:text-brand-accent dark:shadow-2xl dark:ring-white/10 dark:group-hover:bg-brand-accent dark:group-hover:ring-brand-accent">
-                                    <svg className="h-6 w-6" fill="none" viewBox="0 24 24" stroke="currentColor">
+                            <ContactInfoItem 
+                                label="Telepon"
+                                value={contact.phone}
+                                icon={
+                                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                     </svg>
-                                </div>
-                                <div className="transition-colors duration-300">
-                                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest dark:text-slate-500">Telepon</p>
-                                    <p className="mt-1 text-xl font-bold text-brand-primary tracking-tight dark:text-white">{contact.phone}</p>
-                                </div>
-                            </div>
+                                }
+                            />
 
-                            {/* Email */}
-                            <div className="flex items-center gap-6 group">
-                                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-brand-primary shadow-lg ring-1 ring-gray-200 transition-all group-hover:bg-brand-primary group-hover:text-white group-hover:ring-brand-primary dark:bg-midnight-bg dark:text-brand-accent dark:shadow-2xl dark:ring-white/10 dark:group-hover:bg-brand-accent dark:group-hover:ring-brand-accent">
-                                    <svg className="h-6 w-6" fill="none" viewBox="0 24 24" stroke="currentColor">
+                            <ContactInfoItem 
+                                label="Email"
+                                value={contact.email}
+                                href={`mailto:${contact.email}`}
+                                icon={
+                                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
-                                </div>
-                                <div className="transition-colors duration-300">
-                                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest dark:text-slate-500">Email</p>
-                                    <a href={`mailto:${contact.email}`} className="mt-1 block text-xl font-bold text-brand-primary hover:text-brand-bridge transition-colors tracking-tight dark:text-white dark:hover:text-brand-accent">
-                                        {contact.email}
-                                    </a>
-                                </div>
-                            </div>
+                                }
+                            />
 
-                            {/* Address */}
-                            <div className="flex items-center gap-6 group">
-                                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-brand-primary shadow-lg ring-1 ring-gray-200 transition-all group-hover:bg-brand-primary group-hover:text-white group-hover:ring-brand-primary dark:bg-midnight-bg dark:text-brand-accent dark:shadow-2xl dark:ring-white/10 dark:group-hover:bg-brand-accent dark:group-hover:ring-brand-accent">
-                                    <svg className="h-6 w-6" fill="none" viewBox="0 24 24" stroke="currentColor">
+                            <ContactInfoItem 
+                                label="Alamat"
+                                value={contact.address}
+                                icon={
+                                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
-                                </div>
-                                <div className="transition-colors duration-300">
-                                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest dark:text-slate-500">Alamat</p>
-                                    <p className="mt-1 text-lg font-semibold text-gray-600 leading-relaxed max-w-sm dark:text-slate-300">
-                                        {contact.address}
-                                    </p>
-                                </div>
-                            </div>
+                                }
+                            />
                         </div>
                     </div>
 
