@@ -16,6 +16,7 @@ export default function Seo({ title, description, image, url }: SeoProps) {
     const defaultDescription =
         "Layanan terbaik untuk kebutuhan perusahaan Anda.";
     const pageDescription = description || defaultDescription;
+    const ogImage = image || "/assets/logo.png";
 
     return (
         <Head>
@@ -30,14 +31,14 @@ export default function Seo({ title, description, image, url }: SeoProps) {
             <meta property="og:url" content={currentUrl} />
             <meta property="og:title" content={pageTitle} />
             <meta property="og:description" content={pageDescription} />
-            {image && <meta property="og:image" content={image} />}
+            <meta property="og:image" content={ogImage} />
 
             {/* Twitter */}
             <meta property="twitter:card" content="summary_large_image" />
             <meta property="twitter:url" content={currentUrl} />
             <meta property="twitter:title" content={pageTitle} />
             <meta property="twitter:description" content={pageDescription} />
-            {image && <meta property="twitter:image" content={image} />}
+            <meta property="twitter:image" content={ogImage} />
         </Head>
     );
 }

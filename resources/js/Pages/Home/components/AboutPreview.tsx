@@ -33,7 +33,7 @@ export default function AboutPreview({ about }: AboutProps) {
 
                         <h2 className="text-3xl font-bold tracking-tight text-brand-primary dark:text-white sm:text-5xl leading-tight">
                             Membangun Masa Depan <br />
-                            <span className="bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent italic dark:from-brand-accent dark:to-blue-400">
+                            <span className="bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent italic pr-2 dark:from-brand-accent dark:to-blue-400">
                                 Digital
                             </span>{" "}
                             Bersama Kami
