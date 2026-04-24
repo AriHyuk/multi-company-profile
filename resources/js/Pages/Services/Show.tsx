@@ -13,7 +13,6 @@ interface Service {
     content: string | null;
     features: string[] | null;
     icon: string | null;
-    price_estimate: string | null;
     order: number;
     is_active: boolean;
 }
@@ -63,12 +62,7 @@ export default function ServicesShow({ service, contact }: Props) {
                         {service.description}
                     </p>
                     
-                    {service.price_estimate && (
-                        <div className="mt-8 inline-flex items-center rounded-full bg-brand-primary/5 px-6 py-2 border border-brand-primary/10 text-brand-primary dark:bg-blue-500/10 dark:border-blue-500/20 dark:text-blue-300">
-                            <LucideIcons.Tag className="mr-2 h-5 w-5" />
-                            <span className="font-semibold">Estimasi: {service.price_estimate}</span>
-                        </div>
-                    )}
+
                 </div>
             </section>
 

@@ -11,7 +11,6 @@ interface Service {
     slug: string;
     description: string;
     icon: string | null;
-    price_estimate: string | null;
     order: number;
     is_active: boolean;
 }
@@ -103,12 +102,7 @@ export default function ServicesIndex({ services, contact }: Props) {
                                             {service.description}
                                         </p>
 
-                                        {service.price_estimate && (
-                                            <div className="relative mt-6 flex items-center justify-between border-t border-gray-100 pt-6 dark:border-white/10">
-                                                <span className="text-xs font-medium uppercase tracking-wider text-gray-500">Mulai dari</span>
-                                                <span className="font-semibold text-brand-primary dark:text-blue-400">{service.price_estimate}</span>
-                                            </div>
-                                        )}
+
 
                                         <div className="relative mt-6 flex items-center text-sm font-semibold text-brand-primary opacity-0 transition-all duration-300 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 dark:text-blue-400">
                                             <span>Selengkapnya</span>

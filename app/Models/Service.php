@@ -13,7 +13,6 @@ class Service extends Model
         'content',
         'features',
         'icon',
-        'price_estimate',
         'order',
         'is_active',
     ];

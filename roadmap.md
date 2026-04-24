@@ -164,7 +164,7 @@
 
 ### 4.1 Database
 
-- [x] Buat migration `services` (title, slug, description, icon, price_estimate, order, is_active)
+- [x] Buat migration `services` (title, slug, description, icon, order, is_active)
 - [x] Buat Model `Service` + Seeder 3 layanan awal
 
 ### 4.2 Route & Controller
