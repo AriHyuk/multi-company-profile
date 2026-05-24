@@ -117,7 +117,7 @@ export default function PublicLayout({ children }: PropsWithChildren) {
         <div className="flex min-h-screen flex-col bg-slate-50 text-gray-900 transition-colors duration-300 dark:bg-midnight-bg dark:text-gray-100">
             {/* Navbar */}
             <header
-                className={`sticky top-0 z-50 transition-all duration-300 ${
+                className={`sticky top-0 z-[999] transition-all duration-300 ${
                     isScrolled
                         ? "bg-white/95 border-b border-gray-200 shadow-md backdrop-blur-lg dark:bg-midnight-bg/80 dark:border-white/5 dark:shadow-2xl dark:shadow-black/20 dark:backdrop-blur-xl"
                         : "bg-white/90 border-b border-gray-100 backdrop-blur-md dark:bg-midnight-bg dark:border-white/5"
@@ -520,7 +520,7 @@ function DropdownNavItem({ item }: { item: NavLink }) {
 
             {/* Dropdown panel */}
             <div
-                className={`absolute left-0 top-full z-50 mt-2 w-56 origin-top-left transition-all duration-300 ${
+                className={`absolute left-0 top-full z-[999] mt-2 w-56 origin-top-left transition-all duration-300 ${
                     open
                         ? "scale-100 opacity-100 translate-y-0"
                         : "scale-95 opacity-0 -translate-y-2 pointer-events-none"
@@ -557,7 +557,7 @@ function DropdownNavItem({ item }: { item: NavLink }) {
 
                                 {/* Nested flyout */}
                                 {sub.children && flyoutIndex === idx && (
-                                    <div className="absolute left-full top-0 z-50 ml-1 w-52">
+                                    <div className="absolute left-full top-0 z-[1000] ml-1 w-52">
                                         <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl shadow-gray-900/10 ring-1 ring-black/5 dark:border-white/5 dark:bg-midnight-surface dark:shadow-2xl dark:shadow-black/40">
                                             <div className="p-2">
                                                 {sub.children.map((child) => (
