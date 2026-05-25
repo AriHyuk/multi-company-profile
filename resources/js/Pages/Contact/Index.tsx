@@ -10,6 +10,8 @@ interface Props {
     };
 }
 
+import SectionDivider from "@/Components/Sections/SectionDivider";
+
 export default function Contact({ contact }: Props) {
     return (
         <PublicLayout>
@@ -18,15 +20,16 @@ export default function Contact({ contact }: Props) {
                 description="Punya pertanyaan atau butuh konsultasi untuk bisnis Anda? Jangan ragu untuk menghubungi tim kami. Kami siap membantu Anda."
             />
             
-            <div className="min-h-screen bg-slate-50 dark:bg-midnight-surface">
-                {/* 
-                  We use the exact same ContactSection from the landing page 
-                  so the UI stays in sync 100%.
-                */}
-                <div className="pt-8 sm:pt-16">
-                    <ContactSection contact={contact} />
-                </div>
-            </div>
+            {/* 
+              Match the landing page's smooth curve transition exactly 
+            */}
+            <SectionDivider 
+                fromColor="bg-white dark:bg-midnight-bg" 
+                toColor="text-slate-50 dark:text-midnight-surface" 
+                direction="down" 
+            />
+
+            <ContactSection contact={contact} />
         </PublicLayout>
     );
 }

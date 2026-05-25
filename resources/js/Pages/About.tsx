@@ -220,54 +220,63 @@ function StatsGrid({ content }: { content: AboutContent }) {
 
 function VisionMission({ content }: { content: AboutContent }) {
     return (
-        <section id="vision" className="py-24 sm:py-32 scroll-mt-20">
+        <section id="vision" className="py-24 sm:py-32 scroll-mt-20 relative">
+            {/* Ambient Glows */}
+            <div className="absolute top-1/2 left-0 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-accent/5 blur-[120px] opacity-50 dark:bg-brand-accent/10" />
+            <div className="absolute bottom-0 right-0 -z-10 h-[400px] w-[400px] translate-x-1/3 translate-y-1/3 rounded-full bg-brand-primary/10 blur-[100px] opacity-30 dark:bg-brand-primary/20" />
+
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-                    {/* Visi - Large Card */}
-                    <div className="lg:col-span-5 relative flex flex-col group overflow-hidden rounded-[2.5rem] bg-brand-primary p-12 shadow-2xl ring-1 ring-white/10 dark:bg-midnight-bg dark:ring-brand-accent/20">
+                <div className="mx-auto max-w-2xl text-center mb-16">
+                    <h2 className="text-3xl font-bold tracking-tight text-brand-primary sm:text-4xl dark:text-white">
+                        Visi & Misi
+                    </h2>
+                    <p className="mt-4 text-lg text-gray-500 dark:text-slate-400">
+                        Arah langkah dan tujuan besar yang menjadi pondasi kami dalam setiap inovasi yang diciptakan.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                    {/* Vision Bento Card */}
+                    <div className="relative overflow-hidden rounded-[2.5rem] bg-white p-10 sm:p-14 shadow-xl shadow-gray-200/50 ring-1 ring-gray-200 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-brand-primary/20 hover:ring-brand-primary/30 duration-500 dark:bg-midnight-bg dark:shadow-2xl dark:shadow-black/40 dark:ring-white/5 dark:hover:ring-brand-accent/30 group">
+                        <div className="absolute top-0 right-0 p-8 opacity-[0.03] transition-transform duration-700 group-hover:scale-110 group-hover:rotate-12 dark:opacity-[0.05]">
+                            <Target className="h-48 w-48 text-brand-primary dark:text-brand-accent" />
+                        </div>
                         <div className="relative z-10">
-                            <div className="mb-8 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-accent/20 text-brand-accent transition-transform duration-500 group-hover:rotate-12">
+                            <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-primary/10 text-brand-primary transition-transform duration-300 group-hover:scale-110 group-hover:bg-brand-primary group-hover:text-white dark:bg-brand-accent/10 dark:text-brand-accent dark:group-hover:bg-brand-accent dark:group-hover:text-midnight-bg">
                                 <Target className="h-8 w-8" />
                             </div>
-                            <h3 className="text-3xl font-bold text-white mb-6">
+                            <h3 className="text-2xl font-bold text-brand-primary mb-6 dark:text-white">
                                 Visi Kami
                             </h3>
-                            <p className="text-xl leading-[1.8] text-blue-100/90 font-medium italic">
+                            <p className="text-gray-600 text-lg leading-relaxed italic dark:text-slate-300" style={{whiteSpace: 'pre-line'}}>
                                 "{content?.vision}"
                             </p>
                         </div>
-                        <div className="absolute -right-12 -bottom-12 opacity-5 transition-transform duration-1000 group-hover:scale-150 group-hover:-rotate-45">
-                            <Target className="h-80 w-80 text-white" />
-                        </div>
                     </div>
 
-                    {/* Misi - Wide Card */}
-                    <div className="lg:col-span-7 relative flex flex-col group overflow-hidden rounded-[2.5rem] bg-white border border-gray-200 p-12 shadow-sm transition-all hover:border-brand-primary/20 dark:bg-midnight-surface dark:border-white/10 dark:shadow-2xl dark:hover:border-brand-accent/40">
+                    {/* Mission Bento Card */}
+                    <div className="relative overflow-hidden rounded-[2.5rem] bg-white p-10 sm:p-14 shadow-xl shadow-gray-200/50 ring-1 ring-gray-200 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-brand-primary/20 hover:ring-brand-primary/30 duration-500 dark:bg-midnight-bg dark:shadow-2xl dark:shadow-black/40 dark:ring-white/5 dark:hover:ring-brand-accent/30 group">
+                        <div className="absolute top-0 right-0 p-8 opacity-[0.03] transition-transform duration-700 group-hover:scale-110 group-hover:rotate-12 dark:opacity-[0.05]">
+                            <Rocket className="h-48 w-48 text-brand-primary dark:text-brand-accent" />
+                        </div>
                         <div className="relative z-10">
-                            <div className="flex items-center gap-x-4 mb-8">
-                                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent text-white">
-                                    <Rocket className="h-6 w-6" />
-                                </div>
-                                <h3 className="text-2xl font-bold text-brand-primary dark:text-brand-accent">
-                                    Misi Perusahaan
-                                </h3>
+                            <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-primary text-white transition-transform duration-300 group-hover:scale-110 dark:bg-brand-accent/20 dark:text-brand-accent dark:group-hover:bg-brand-accent dark:group-hover:text-midnight-bg">
+                                <Rocket className="h-8 w-8" />
                             </div>
-                            <ul className="grid grid-cols-1 gap-6">
-                                {content?.mission
-                                    ?.split("\n")
-                                    .map((point, index) => (
-                                        <li
-                                            key={index}
-                                            className="flex items-start gap-4 text-gray-700 dark:text-slate-300"
-                                        >
-                                            <div className="mt-1.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-accent/10 text-brand-accent border border-brand-accent/20">
-                                                <div className="h-1.5 w-1.5 rounded-full bg-brand-accent" />
-                                            </div>
-                                            <span className="text-lg leading-relaxed">
-                                                {point}
-                                            </span>
-                                        </li>
-                                    ))}
+                            <h3 className="text-2xl font-bold text-brand-primary mb-6 dark:text-white">
+                                Misi Kami
+                            </h3>
+                            <ul className="grid grid-cols-1 gap-4">
+                                {content?.mission?.split("\n").map((point, index) => (
+                                    <li key={index} className="flex items-start gap-3 text-gray-600 dark:text-slate-300">
+                                        <div className="mt-1.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary dark:bg-brand-accent/20 dark:text-brand-accent">
+                                            <div className="h-1.5 w-1.5 rounded-full bg-current" />
+                                        </div>
+                                        <span className="text-lg leading-relaxed">
+                                            {point}
+                                        </span>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>

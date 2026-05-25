@@ -20,9 +20,9 @@ class AboutController extends Controller
             'content' => $content,
             'teamMembers' => $teamMembers,
             'contact' => [
-                'email' => env('CONTACT_EMAIL', 'contact@multi-company.co.id'),
-                'phone' => env('CONTACT_PHONE', '+62 (21) 1234-5678'),
-                'address' => env('CONTACT_ADDRESS', 'Jl. Raya Kemang No. 123, Jakarta Selatan, 12730'),
+                'email'   => \App\Models\SiteSetting::get('contact_email', ''),
+                'phone'   => \App\Models\SiteSetting::get('contact_phone', ''),
+                'address' => \App\Models\SiteSetting::get('contact_address', ''),
             ],
         ]);
     }
