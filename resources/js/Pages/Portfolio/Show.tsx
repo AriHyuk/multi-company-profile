@@ -2,6 +2,7 @@ import Seo from "@/Components/Seo";
 import { Link } from "@inertiajs/react";
 import PublicLayout from "@/Layouts/PublicLayout";
 import ContactSection from "@/Components/Sections/ContactSection";
+import SectionDivider from "@/Components/Sections/SectionDivider";
 
 interface Portfolio {
     id: number;
@@ -161,6 +162,8 @@ export default function PortfolioShow({ portfolio, contact }: Props) {
                     )}
                 </div>
             </section>
+
+            <SectionDivider fromColor="bg-white dark:bg-midnight-bg" toColor="text-slate-50 dark:text-midnight-surface" direction="down" />
 
             <ContactSection contact={contact} />
         </PublicLayout>

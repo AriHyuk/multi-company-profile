@@ -157,7 +157,6 @@ export default function ServicesShow({ service, contact }: Props) {
                 </div>
             </section>
 
-            <SectionDivider fromColor="bg-slate-50 dark:bg-midnight-surface" toColor="text-white dark:text-midnight-bg" direction="up" />
 
             <ContactSection contact={contact} />
         </PublicLayout>
