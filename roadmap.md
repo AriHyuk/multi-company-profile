@@ -654,4 +654,18 @@ docker compose restart app
 
 ---
 
+### 6. Transisi Background (SectionDivider) & Sinkronisasi Data
+
+**Masalah:** Lengkungan `SectionDivider` di atas `ContactSection` sering patah (tidak smooth) antar halaman, dan data kontak (No HP/Email) berbeda antara halaman Home dan halaman lainnya (seperti About/Portfolio).
+
+**Root cause:**
+- `SectionDivider` bergantung pada prop `fromColor` dan `toColor`. Jika section di atasnya memiliki warna yang sama dengan `ContactSection` (misal sama-sama `bg-slate-50`), divider akan merusak transisi. Divider hanya diperlukan jika warnanya berbeda (contoh: `bg-white` ke `bg-slate-50`).
+- Data kontak di beberapa controller masih menggunakan dummy data dari `env()`, sedangkan di `HomeController` sudah menggunakan `SiteSetting::get()`.
+
+**Fix:**
+- Hapus `SectionDivider` jika background atas dan bawah sudah sama (seperti di halaman `Services`). Tambahkan `SectionDivider` spesifik (`fromColor="bg-white..." toColor="text-slate-50..."`) jika ada transisi warna.
+- Selalu *passing* data kontak dari `SiteSetting` di setiap Controller yang merender halaman dengan `ContactSection`.
+
+---
+
 _Referensi: [PRD Notion](https://www.notion.so/PRD-Company-Profile-Ecosystem-311c241984268106a8a9f134c14674fe) | [Product Backlog Notion](https://www.notion.so/Product-Backlog-Phase-1-MVP-315c241984268177b128c649e2342367)_
