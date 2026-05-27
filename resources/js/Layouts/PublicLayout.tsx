@@ -493,8 +493,6 @@ function DropdownNavItem({ item }: { item: NavLink }) {
         <div
             ref={ref}
             className="relative"
-            onMouseEnter={() => setOpen(true)}
-            onMouseLeave={() => { setOpen(false); setFlyoutIndex(null); }}
         >
             {/* Trigger button */}
             <button
@@ -503,7 +501,7 @@ function DropdownNavItem({ item }: { item: NavLink }) {
                         ? "text-brand-primary dark:text-brand-accent"
                         : "text-gray-700 hover:text-brand-primary dark:text-gray-400 dark:hover:text-white"
                 }`}
-                onClick={() => setOpen((v) => !v)}
+                onClick={() => setOpen(!open)}
                 aria-haspopup="true"
                 aria-expanded={open}
             >
