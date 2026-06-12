@@ -23,9 +23,10 @@ class HomeController extends Controller
         return Inertia::render('Home', [
             'hero' => [
                 'title'    => SiteSetting::get('hero_title', 'Selamat Datang'),
-                'subtitle' => SiteSetting::get('hero_subtitle', ''),
+                'subtitle' => SiteSetting::get('hero_description', ''),
                 'ctaLabel' => SiteSetting::get('hero_cta_label', 'Hubungi Kami'),
                 'ctaUrl'   => SiteSetting::get('hero_cta_url', '/kontak'),
+                'imageUrl' => SiteSetting::get('hero_image', ''),
             ],
             'meta' => [
                 'description' => SiteSetting::get('meta_description', ''),
