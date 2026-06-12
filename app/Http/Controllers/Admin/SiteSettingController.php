@@ -24,13 +24,23 @@ class SiteSettingController extends Controller
     {
         $data = $request->validate([
             'settings' => 'required|array',
-            'settings.*' => 'nullable|string'
+            // Allow string or file
         ]);
 
         DB::beginTransaction();
         try {
-            foreach ($data['settings'] as $key => $value) {
-                SiteSetting::set($key, $value);
+            foreach ($request->all()['settings'] as $key => $value) {
+                if ($request->hasFile("settings.{$key}")) {
+                    $file = $request->file("settings.{$key}");
+                    $path = $file->store('settings', 'public');
+                    SiteSetting::set($key, '/storage/' . $path);
+                } else {
+                    // Skip if it's an image field and null (no new file uploaded)
+                    if (str_contains($key, 'image') && $value === null) {
+                        continue;
+                    }
+                    SiteSetting::set($key, $value ?? '');
+                }
             }
             DB::commit();
             return redirect()->back()->with('success', 'Pengaturan berhasil diperbarui!');
