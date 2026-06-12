@@ -15,6 +15,9 @@ export default function Index({ settings }: Props) {
             company_tagline: settings.company_tagline || "",
             hero_title: settings.hero_title || "",
             hero_description: settings.hero_description || "",
+            hero_cta_label: settings.hero_cta_label || "",
+            hero_cta_url: settings.hero_cta_url || "",
+            hero_image: "" as string | File,
             contact_email: settings.contact_email || "",
             contact_phone: settings.contact_phone || "",
             contact_address: settings.contact_address || "",
@@ -117,6 +120,65 @@ export default function Index({ settings }: Props) {
                                     className="w-full rounded-xl border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 text-sm"
                                     placeholder="Penjelasan singkat di bawah headline"
                                 />
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-sm font-semibold text-gray-700">
+                                    Tombol CTA (Label)
+                                </label>
+                                <input
+                                    type="text"
+                                    value={data.settings.hero_cta_label}
+                                    onChange={(e) =>
+                                        setData("settings", {
+                                            ...data.settings,
+                                            hero_cta_label: e.target.value,
+                                        })
+                                    }
+                                    className="w-full rounded-xl border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2.5"
+                                    placeholder="Contoh: Hubungi Kami"
+                                />
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-sm font-semibold text-gray-700">
+                                    Tombol CTA (URL)
+                                </label>
+                                <input
+                                    type="text"
+                                    value={data.settings.hero_cta_url}
+                                    onChange={(e) =>
+                                        setData("settings", {
+                                            ...data.settings,
+                                            hero_cta_url: e.target.value,
+                                        })
+                                    }
+                                    className="w-full rounded-xl border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2.5"
+                                    placeholder="Contoh: /kontak"
+                                />
+                            </div>
+
+                            <div className="md:col-span-2 space-y-1">
+                                <label className="text-sm font-semibold text-gray-700">
+                                    Gambar Hero (Opsional)
+                                </label>
+                                {settings.hero_image && (
+                                    <div className="mb-3">
+                                        <img src={settings.hero_image} alt="Hero Preview" className="h-32 object-cover rounded-xl border border-gray-200" />
+                                    </div>
+                                )}
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) =>
+                                        setData("settings", {
+                                            ...data.settings,
+                                            hero_image: e.target.files?.[0] || "",
+                                        })
+                                    }
+                                    className="w-full rounded-xl border border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 text-sm py-2 px-3 bg-white"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar saat ini.</p>
                             </div>
                         </div>
                     </div>
