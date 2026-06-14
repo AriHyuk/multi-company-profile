@@ -48,6 +48,9 @@ Route::prefix('admin')
         Route::resource('articles', \App\Http\Controllers\Admin\ArticleController::class);
         Route::resource('services', \App\Http\Controllers\Admin\ServiceController::class);
         Route::resource('team-members', \App\Http\Controllers\Admin\TeamMemberController::class);
+        
+        Route::get('/about-content', [\App\Http\Controllers\Admin\AboutContentController::class, 'edit'])->name('about-content.edit');
+        Route::post('/about-content', [\App\Http\Controllers\Admin\AboutContentController::class, 'update'])->name('about-content.update');
         Route::resource('leads', \App\Http\Controllers\Admin\LeadController::class)->only(['index', 'show', 'destroy']);
         
         // Admin-only features
