@@ -32,6 +32,7 @@ interface Props {
         subtitle: string;
         ctaLabel: string;
         ctaUrl: string;
+        imageUrl?: string;
     };
     meta: {
         description: string;
@@ -79,7 +80,7 @@ export default function Home({
                 subtitle={hero.subtitle}
                 ctaLabel={hero.ctaLabel}
                 ctaUrl={hero.ctaUrl}
-                imageUrl="/images/hero-poster.png"
+                imageUrl={hero.imageUrl || "/images/hero-poster.png"}
             />
 
             <SectionDivider fromColor="bg-white dark:bg-midnight-bg" toColor="text-slate-50 dark:text-midnight-surface" direction="down" />
